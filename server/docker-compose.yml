@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  api_brodcast:
+    container_name: api_brodcast
+    build:
+      network: host
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}

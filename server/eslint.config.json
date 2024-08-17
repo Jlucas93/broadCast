@@ -1,0 +1,38 @@
+{
+  "env": {
+    "es2021": true
+  },
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "extends": ["standard", "eslint-config-prettier"],
+  "plugins": ["prettier", "import", "import-helpers"],
+  "rules": {
+    "camelcase": "off",
+    "no-console": ["warn", { "allow": ["info", "error"] }],
+    "import/no-unresolved": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import-helpers/order-imports": [
+      "error",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          ["/^react$/", "/^redux/", "/^react-/"],
+          "module",
+          "/^~/assets/",
+          "/^~/",
+          "/^@shared/",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  }
+}

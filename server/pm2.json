@@ -1,0 +1,11 @@
+{
+	"apps": [
+		{
+			"name": "api-broadcast",
+			"script": "./build/server.cjs",
+			"env": {
+				"NODE_ENV": "production"
+			}
+		}
+	]
+}

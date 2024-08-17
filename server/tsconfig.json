@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "CommonJS",
+		"moduleResolution": "Node",
+		"sourceMap": true,
+		"strict": true,
+		"outDir": "build",
+		"baseUrl": "./",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		},
+		"lib": [
+			"ESNext"
+		],
+		"esModuleInterop": true,
+		"allowJs": true,
+		"noImplicitAny": false,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"isolatedModules": true,
+		"useUnknownInCatchVariables": false
+	}
+}
