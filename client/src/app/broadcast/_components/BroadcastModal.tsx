@@ -5,6 +5,13 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 
+import {
+  CustomModal,
+  CustomButton,
+  CustomInput,
+  CustomSelect,
+} from '@/components/ui';
+import { IBroadcast } from '@/interfaces';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   SelectChangeEvent,
@@ -12,14 +19,6 @@ import {
   FormControlLabel,
   TextField,
 } from '@mui/material';
-
-import {
-  CustomModal,
-  CustomButton,
-  CustomInput,
-  CustomSelect,
-} from '../../components/ui';
-import { IBroadcast } from '../../interfaces';
 
 interface IProps {
   open: boolean;

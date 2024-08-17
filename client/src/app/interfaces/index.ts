@@ -20,3 +20,19 @@ export interface IBroadcast {
   contactsIDs: string[];
   connectionID: string;
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface IAuthContextType {
+  user: IUser;
+  isAuth: boolean;
+  signIn(userData: {
+    email: string;
+    password: string;
+  }): Promise<{ success: boolean }>;
+  signOut(): void;
+}

@@ -6,9 +6,9 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
+import { CustomButton, CustomInput } from '@/components/ui';
+import { useAuth } from '@/contexts/Auth';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { CustomButton, CustomInput } from '../components/ui';
 
 const formschema = z.object({
   email: z.string(),
@@ -19,6 +19,7 @@ type HandleUpdateFormData = z.infer<typeof formschema>;
 
 export function FormLogin() {
   const router = useRouter();
+  const { signIn } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -28,10 +29,16 @@ export function FormLogin() {
 
   async function formSubmit(values: { email: string; password: string }) {
     setLoading(true);
-    console.error({
+
+    const { success } = await signIn({
       email: values.email,
       password: values.password,
     });
+
+    if (success) {
+      router.push('/connections');
+    }
+
     setLoading(false);
   }
 
@@ -61,7 +68,12 @@ export function FormLogin() {
             {...register('password')}
           />
         </div>
-        <CustomButton className="w-full h-16" variant="contained" type="submit">
+        <CustomButton
+          className="w-full h-16"
+          variant="contained"
+          type="submit"
+          disabled={loading}
+        >
           Entrar
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">

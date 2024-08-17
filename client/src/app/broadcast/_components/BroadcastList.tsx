@@ -2,12 +2,12 @@
 
 import { useState } from 'react';
 
+import { IBroadcast } from '@/interfaces';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import { IconButton } from '@mui/material';
 
-import { IBroadcast } from '../../interfaces';
 import { BroadcastModal } from './BroadcastModal';
 
 const brodcasts = [

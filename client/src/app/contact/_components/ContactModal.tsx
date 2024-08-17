@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { z } from 'zod';
 
+import { CustomModal, CustomButton, CustomInput } from '@/components/ui';
+import { IContact } from '@/interfaces';
+import api from '@/services/api';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { CustomModal, CustomButton, CustomInput } from '../../components/ui';
-import { IContact } from '../../interfaces';
 
 interface IProps {
   open: boolean;
@@ -50,6 +51,18 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
     console.info(values);
+    try {
+      if (isEdit) {
+        await api.put(`/contacts/${contact?.id}`, values);
+      } else {
+        await api.post('/auth/singup', values);
+      }
+      toast.success('Contato salvo com sucesso!');
+      onClose();
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao fazer cadastro');
+    }
     setLoading(false);
   }
 

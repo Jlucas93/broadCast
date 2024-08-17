@@ -2,18 +2,19 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
+import { CustomButton, CustomInput } from '@/components/ui';
+import api from '@/services/api';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { CustomButton, CustomInput } from '../../components/ui';
 
 const formschema = z
   .object({
     name: z.string().min(1, 'Nome muito curto'),
-    email: z.string(),
+    email: z.string().min(1, 'E-mail muito curto'),
     password: z.string().min(8, 'Senha muito curta'),
     confirmPassword: z.string(),
   })
@@ -39,10 +40,18 @@ export function FormSignUp() {
 
   async function formSubmit(values: { email: string; password: string }) {
     setLoading(true);
-    console.error({
-      email: values.email,
-      password: values.password,
-    });
+
+    try {
+      await api.post('/auth/singup', values);
+
+      toast.success('Cadastro efetuado com sucesso!');
+
+      router.push('/');
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao fazer cadastro');
+    }
+
     setLoading(false);
   }
 
@@ -63,7 +72,11 @@ export function FormSignUp() {
             required
             {...register('name')}
           />
-
+          {errors && errors.name ? (
+            <div className="w-full text-dangerBase text-sm">
+              {errors.name.message}
+            </div>
+          ) : null}
           <CustomInput
             className="w-full"
             type="email"
@@ -71,6 +84,12 @@ export function FormSignUp() {
             required
             {...register('email')}
           />
+
+          {errors && errors.email ? (
+            <div className="w-full text-dangerBase text-sm">
+              {errors.email.message}
+            </div>
+          ) : null}
 
           <CustomInput
             className="w-full"
@@ -80,6 +99,12 @@ export function FormSignUp() {
             required
             {...register('password')}
           />
+
+          {errors && errors.password ? (
+            <div className="w-full text-dangerBase text-sm">
+              {errors.password.message}
+            </div>
+          ) : null}
 
           <CustomInput
             className="w-full"
@@ -96,7 +121,12 @@ export function FormSignUp() {
           ) : null}
         </div>
 
-        <CustomButton className="w-full h-16" variant="contained" type="submit">
+        <CustomButton
+          className="w-full h-16"
+          variant="contained"
+          type="submit"
+          disabled={loading}
+        >
           Criar conta
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 
-import { CustomButton } from '../../components/ui';
+import { CustomButton } from '@/components/ui';
+
 import { ConnectionModal } from './ConnectionModal';
 
 export function ConnectionHeader() {

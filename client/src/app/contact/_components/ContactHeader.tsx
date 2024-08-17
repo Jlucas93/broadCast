@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 
-import { CustomButton } from '../../components/ui';
+import { CustomButton } from '@/components/ui';
+
 import { ContactModal } from './ContactModal';
 
 export function HederContact() {

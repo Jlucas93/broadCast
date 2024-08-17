@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
+import { IConnection } from '@/interfaces';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
-import { IConnection } from '../../interfaces';
 import { ConnectionModal } from './ConnectionModal';
 
 const connections = [

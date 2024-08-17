@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+import { useAuth } from '@/contexts/Auth';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import PodcastsIcon from '@mui/icons-material/Podcasts';
@@ -10,14 +11,15 @@ import IconButton from '@mui/material/IconButton';
 
 export default function Sidebar() {
   const router = useRouter();
+  const { signOut } = useAuth();
 
   function handleNavigate(url: string) {
     router.push(url);
   }
 
   async function handleLogout() {
-    // signOut();
-    console.error('logout');
+    signOut();
+    router.push('/');
   }
 
   return (

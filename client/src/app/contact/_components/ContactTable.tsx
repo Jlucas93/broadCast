@@ -1,13 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import { CustomTable } from '@/components/ui';
+import { IContact } from '@/interfaces';
+import { getContacts } from '@/services/contact.service';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-import { CustomTable } from '../../components/ui';
-import { IContact } from '../../interfaces';
 import { ContactModal } from './ContactModal';
 
 const columns = [
@@ -17,29 +18,9 @@ const columns = [
   { id: 'actions', label: 'Ações' },
 ];
 
-const data = [
-  {
-    id: '1',
-    name: 'John Doe',
-    phone: '16 992131902',
-    email: 'john@example.com',
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    phone: '18 992131902',
-    email: 'jane@example.com',
-  },
-  {
-    id: '3',
-    name: 'Alice Johnson',
-    phone: '19 992131902',
-    email: 'alice@example.com',
-  },
-];
-
 export function ContactTable() {
   const [openModal, setOpenModal] = useState(false);
+  const [contacts, setContacts] = useState<IContact[]>([]);
   const [selectedContact, setSelectedContact] = useState<IContact | undefined>(
     undefined,
   );
@@ -53,11 +34,21 @@ export function ContactTable() {
     console.info('Delete contact with id:', contactId);
   }
 
+  useEffect(() => {
+    async function fetchContacts() {
+      const { data } = await getContacts();
+
+      setContacts(data.contacts);
+    }
+
+    fetchContacts();
+  }, []);
+
   return (
     <div className="w-full p-6 flex flex-col justify-between items-center gap-4 text-black">
       <CustomTable
         columns={columns}
-        data={data.map((row) => ({
+        data={contacts.map((row) => ({
           ...row,
           actions: (
             <div className="flex gap-2">

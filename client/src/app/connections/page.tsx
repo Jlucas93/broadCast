@@ -1,5 +1,6 @@
-import Layout from '../components/layout';
-import { Page } from '../components/ui';
+import Layout from '@/components/layout';
+import { Page } from '@/components/ui';
+
 import { ConnectionHeader } from './_components/ConnectionHeader';
 import { ConnectionList } from './_components/ConnectionList';
 

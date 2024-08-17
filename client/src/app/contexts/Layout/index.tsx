@@ -10,7 +10,7 @@ import {
 
 import { usePathname } from 'next/navigation';
 
-import Layout from '../../layout';
+import Layout from '@/layout';
 
 interface LayoutContextType {
   toogleFull(): void;

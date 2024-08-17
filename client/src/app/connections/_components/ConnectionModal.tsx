@@ -5,15 +5,14 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import {
   CustomModal,
   CustomButton,
   CustomInput,
   CustomSwitch,
-} from '../../components/ui';
-import { IConnection } from '../../interfaces';
+} from '@/components/ui';
+import { IConnection } from '@/interfaces';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
