@@ -1,12 +1,14 @@
 'use client';
-import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { CustomButton, CustomInput } from '../components/ui';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+
+import { CustomButton, CustomInput } from '../components/ui';
 
 const formschema = z.object({
   email: z.string(),
@@ -37,7 +39,7 @@ export function FormLogin() {
     <div className="w-[80%] h-full max-w-[400px] p-4 flex flex-col justify-center items-center gap-4 text-black">
       <form
         onSubmit={handleSubmit(formSubmit)}
-        className="w-full flex flex-col justify-start gap-4 p-4 bg-primary-base border-1 border-solid border-white rounded-default"
+        className="w-full flex flex-col justify-start gap-4 p-4 bg-white border-1 border-solid border-white rounded-default"
       >
         <div className="w-full flex justify-center items-center">
           <h1 className="text-2xl font-bold">Login</h1>
@@ -63,7 +65,7 @@ export function FormLogin() {
           Entrar
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">
-          <button onClick={() => router.push('/signup')}>
+          <button type="button" onClick={() => router.push('/signup')}>
             Não tem conta? Cadastre-se agora
           </button>
         </div>

@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
+
 import { Dialog, DialogProps } from '@mui/material';
 
-interface ModalProps extends DialogProps {
+interface IProps extends DialogProps {
   children: ReactNode;
 }
 
-export default function CustomModal({ children, ...rest }: ModalProps) {
+export default function CustomModal({ children, ...rest }: IProps) {
   return (
     <Dialog
       {...rest}
@@ -19,7 +20,7 @@ export default function CustomModal({ children, ...rest }: ModalProps) {
           zIndex: 1300,
         },
       }}
-      className="bg-white"
+      className="bg-primary-light"
     >
       {children}
     </Dialog>

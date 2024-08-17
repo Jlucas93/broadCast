@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   Table,
   TableBody,
@@ -9,36 +10,49 @@ import {
   Paper,
 } from '@mui/material';
 
-interface TableColumn {
+interface ITableColumn {
   id: string;
   label: string;
 }
 
-interface TableRowData {
+interface ITableRowData {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }
 
-interface CustomTableProps {
-  columns: TableColumn[];
-  data: TableRowData[];
+interface IProps {
+  columns: ITableColumn[];
+  data: ITableRowData[];
 }
 
-const CustomTable: React.FC<CustomTableProps> = ({ columns, data }) => {
+export default function CustomTable({ columns, data }: IProps) {
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
             {columns.map((column) => (
-              <TableCell key={column.id}>{column.label}</TableCell>
+              <TableCell key={column.id} align="center" className="font-bold">
+                {column.label}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, rowIndex) => (
-            <TableRow key={rowIndex}>
+          {data.map((row) => (
+            <TableRow key={crypto.randomUUID()}>
               {columns.map((column) => (
-                <TableCell key={column.id}>{row[column.id]}</TableCell>
+                <TableCell key={column.id} align="center">
+                  {column.id === 'actions' ? (
+                    <div className="flex items-center justify-center gap-2">
+                      {row[column.id]}
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center h-full">
+                      {row[column.id]}
+                    </div>
+                  )}
+                </TableCell>
               ))}
             </TableRow>
           ))}
@@ -46,6 +60,4 @@ const CustomTable: React.FC<CustomTableProps> = ({ columns, data }) => {
       </Table>
     </TableContainer>
   );
-};
-
-export default CustomTable;
+}

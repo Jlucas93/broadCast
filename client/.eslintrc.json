@@ -2,16 +2,85 @@
   "extends": [
     "next",
     "next/core-web-vitals",
-    "prettier"
+    "prettier",
+    "eslint:recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
   ],
   "plugins": [
-    "prettier"
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "prettier",
+    "import",
+    "eslint-plugin-import-helpers"
+  ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      },
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*"
+      ],
+      "rules": {
+        "no-html-link-for-pages": "off"
+      }
+    }
   ],
   "rules": {
     "camelcase": "off",
     "no-nested-ternary": "off",
     "no-underscore-dangle": "off",
     "no-param-reassign": "off",
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "error",
+          "warn",
+          "info"
+        ]
+      }
+    ],
+    "no-html-link-for-pages": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn"
+    ],
     "no-restricted-syntax": [
       "off",
       "ForOfStatement"
@@ -56,6 +125,55 @@
       {
         "ts": "never",
         "tsx": "never"
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          [
+            "/^react/"
+          ],
+          [
+            "/^@testing-library/"
+          ],
+          "module",
+          "/^@/",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
+          "/routes/",
+          "/styles/"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
       }
     ],
     "prettier/prettier": [

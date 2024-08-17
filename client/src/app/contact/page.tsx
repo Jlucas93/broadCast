@@ -1,12 +1,16 @@
-import { HederContact } from './_components/Header';
+import Layout from '../components/layout';
+import { Page } from '../components/ui';
+import { HederContact } from './_components/ContactHeader';
 import { ContactTable } from './_components/ContactTable';
 
 export default function Contact() {
   return (
-    <main className="w-full h-full flex flex-col justify-start items-center bg-primary-base ">
-      <HederContact />
-      <p>Contatos</p>
-      <ContactTable />
-    </main>
+    <Layout>
+      <Page title="Contatos">
+        <HederContact />
+
+        <ContactTable />
+      </Page>
+    </Layout>
   );
 }

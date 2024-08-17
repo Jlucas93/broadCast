@@ -1,38 +1,59 @@
 'use client';
 
-import { CustomModal, CustomButton, CustomInput } from '../../components/ui';
-
-import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
 import { z } from 'zod';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+
+import {
+  CustomModal,
+  CustomButton,
+  CustomInput,
+  CustomSwitch,
+} from '../../components/ui';
+import { IConnection } from '../../interfaces';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
   isEdit: boolean;
+  connection?: IConnection;
 }
 
 const formschema = z.object({
-  email: z.string(),
+  id: z.string().or(z.undefined()),
   name: z.string(),
-  phone: z.string(),
+  active: z.boolean(),
 });
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ConactModal({ open, onClose, isEdit }: IProps) {
-  const [loading, setLoading] = useState(false);
+export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
+  const [, setLoading] = useState(false);
 
-  const { handleSubmit, register } = useForm<HandleUpdateFormData>({
+  const { handleSubmit, register, control } = useForm<HandleUpdateFormData>({
     resolver: zodResolver(formschema),
+
+    defaultValues: async () => {
+      if (isEdit && connection) {
+        return {
+          id: connection.id,
+          name: connection.name,
+          active: connection?.active,
+        };
+      }
+      return {
+        name: '',
+        active: false,
+      };
+    },
   });
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
-    console.log(values);
+    console.info(values);
     setLoading(false);
   }
 
@@ -43,7 +64,9 @@ export function ConactModal({ open, onClose, isEdit }: IProps) {
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
           <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
-          <button onClick={() => onClose()}>X</button>
+          <button type="button" onClick={() => onClose()}>
+            X
+          </button>
         </header>
 
         <main className="w-full h-full">
@@ -54,39 +77,34 @@ export function ConactModal({ open, onClose, isEdit }: IProps) {
             <div className="w-full h-full flex flex-col justify-start items-start mt-8 gap-4">
               <CustomInput
                 className="w-full"
-                type="text"
-                label="Nome"
-                required
-                {...register('name')}
-              />
-
-              <CustomInput
-                className="w-full"
                 placeholder=""
                 type="text"
-                label="E-mail"
-                {...register('phone')}
+                label="Nome da conexão"
+                {...register('name')}
               />
-
-              <CustomInput
-                className="w-full"
-                placeholder="(00) 00000-0000"
-                type="text"
-                label="Telefone"
-                required
-                {...register('email')}
+              <Controller
+                name="active"
+                control={control}
+                defaultValue={false}
+                render={({ field }) => (
+                  <CustomSwitch
+                    checked={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
             </div>
 
             <div className="w-full flex items-center justify-end p-2 gap-3">
               <CustomButton
-                variant="contained"
+                variant="outlined"
                 onClick={() => onClose()}
                 type="button"
+                color="error"
               >
                 Cancelar
               </CustomButton>
-              <CustomButton variant="contained" type="submit">
+              <CustomButton variant="outlined" type="submit" color="success">
                 Salvar
               </CustomButton>
             </div>

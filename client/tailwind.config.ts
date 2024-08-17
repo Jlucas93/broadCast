@@ -57,8 +57,8 @@ const config: Config = {
 
       primary: {
         light: '#44475A',
-        base: '#FFFFFF',
-        dark: '#44475A',
+        base: '#22272E',
+        dark: '#1C2128',
       },
 
       secondary: {
@@ -100,6 +100,8 @@ const config: Config = {
       30: '7.5rem',
       32: '8rem',
       40: '10rem',
+      41: '11rem',
+
       48: '12rem',
       56: '14rem',
       64: '16rem',
@@ -148,12 +150,12 @@ const config: Config = {
 
     boxShadow: {
       default:
-        '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-      md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-      lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-      '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-      inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+        '0 1px 3px 0 rgba(255, 255, 255, 0.1), 0 1px 2px 0 rgba(255, 255, 255, 0.06)',
+      md: '0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06)',
+      lg: '0 10px 15px -3px rgba(255, 255, 255, 0.1), 0 4px 6px -2px rgba(255, 255, 255, 0.05)',
+      xl: '0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 10px 10px -5px rgba(255, 255, 255, 255.04)',
+      '2xl': '0 25px 50px -12px rgba(255, 255, 255, 0.25)',
+      inner: 'inset 0 2px 4px 0 rgba(255, 255, 255, 0.06)',
       outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
       none: 'none',
     },

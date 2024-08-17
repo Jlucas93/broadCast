@@ -1,8 +1,6 @@
-'use client';
-
 import { ReactNode } from 'react';
 
-import { Headerbar, Sidebar } from '@/layout/components';
+import Sidebar from './Sidebar';
 
 interface IProps {
   children?: ReactNode;
@@ -16,8 +14,6 @@ export default function Layout({ children }: IProps) {
       </section>
 
       <section className="flex flex-col w-full">
-        <Headerbar />
-
         <main className="h-screen w-full overflow-y-auto overflow-x-hidden">
           {children}
         </main>

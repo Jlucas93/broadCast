@@ -1,16 +1,12 @@
 'use client';
+
 import { useState } from 'react';
+
 import { CustomButton } from '../../components/ui';
-import { ConactModal } from './ConactModal';
+import { BroadcastModal } from './BroadcastModal';
 
-export function HederContact() {
+export function BroadcastHeader() {
   const [openModal, setOpenModal] = useState(false);
-
-  const handleCloseModal = () => {};
-
-  const handleConfirm = () => {
-    console.log('Confirmed!');
-  };
 
   return (
     <div className="w-full p-6 flex flex-row justify-end items-center gap-4 text-black  ">
@@ -19,10 +15,10 @@ export function HederContact() {
       </CustomButton>
 
       {openModal ? (
-        <ConactModal
+        <BroadcastModal
           open={openModal}
           onClose={() => setOpenModal(false)}
-          isEdit
+          isEdit={false}
         />
       ) : null}
     </div>
