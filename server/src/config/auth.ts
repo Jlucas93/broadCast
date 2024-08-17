@@ -1,6 +1,6 @@
-require('dotenv/config');
+import { ENV } from './env';
 
 export default {
-	secret: process.env.APP_SECRET as string,
+	secret: ENV.APP_SECRET as string,
 	expiresIn: '3d',
 };

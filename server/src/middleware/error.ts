@@ -1,18 +1,25 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { ZodError } from 'zod';
 
 import { AppError } from '../errors/AppError';
-
 export default function errorMiddleware(
-	err: Error | AppError,
+	error: Error | AppError,
 	_req: Request,
 	res: Response,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	next: NextFunction,
 ) {
-	if (err instanceof AppError) {
-		console.info('entrei aqui???');
-		return res.status(err.statusCode).json({
+	if (error instanceof AppError) {
+		return res.status(error.statusCode).json({
 			status: 'error',
-			message: err.message,
+			message: error.message,
 		});
+	}
+
+	if (error instanceof ZodError) {
+		return res
+			.status(400)
+			.json({ message: 'Validation error.', issues: error.format() });
 	}
 
 	return res.status(500).json({
