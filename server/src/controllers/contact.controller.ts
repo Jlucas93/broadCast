@@ -8,7 +8,7 @@ async function getAllContacts(req: Request, res: Response, next: NextFunction) {
 	try {
 		const { contacts } = await getAllContactsService();
 
-		return res.status(201).json({ contacts });
+		return res.status(201).json(contacts);
 	} catch (error) {
 		logger({
 			message: error as string,
