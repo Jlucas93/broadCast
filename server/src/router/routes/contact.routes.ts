@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
+import { getAllContacts } from '../../controllers/contact.controller';
 import jwt from '../../middleware/jwt';
-const ContactRoute = Router();
 
-ContactRoute.post('/create', jwt, (req, res) => {
-	return res.json({ message: 'Hello World' });
-});
+const contactRoute = Router();
 
-export default ContactRoute;
+contactRoute.get('/', jwt, getAllContacts);
+
+export default contactRoute;

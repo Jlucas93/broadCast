@@ -1,26 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import z from 'zod';
 
-import { loginService, singupService } from '../services/auth';
+import { getAllContactsService } from '../services/contacts';
 import { logger } from '../utils';
 
-async function singup(req: Request, res: Response, next: NextFunction) {
+async function getAllContacts(req: Request, res: Response, next: NextFunction) {
 	try {
-		const bodySchema = z.object({
-			email: z.string(),
-			name: z.string(),
-			password: z.string(),
-		});
+		const { contacts } = await getAllContactsService();
 
-		const { email, name, password } = bodySchema.parse(req.body);
-
-		const { message } = await singupService({
-			email,
-			name,
-			password,
-		});
-
-		return res.status(201).json({ message });
+		return res.status(201).json({ contacts });
 	} catch (error) {
 		logger({
 			message: error as string,
@@ -31,7 +19,7 @@ async function singup(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-async function login(req: Request, res: Response, next: NextFunction) {
+async function createContact(req: Request, res: Response, next: NextFunction) {
 	try {
 		const bodySchema = z.object({
 			email: z.string(),
@@ -40,9 +28,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
 		const { email, password } = bodySchema.parse(req.body);
 
-		const { user, token } = await loginService({ email, password });
-
-		return res.status(201).json({ user, token });
+		return res.status(201).json({ email, password });
 	} catch (error) {
 		logger({
 			message: error as string,
@@ -53,4 +39,44 @@ async function login(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-export { singup, login };
+async function editContact(req: Request, res: Response, next: NextFunction) {
+	try {
+		const bodySchema = z.object({
+			email: z.string(),
+			password: z.string(),
+		});
+
+		const { email, password } = bodySchema.parse(req.body);
+
+		return res.status(201).json({ email, password });
+	} catch (error) {
+		logger({
+			message: error as string,
+			type: 'error',
+		});
+
+		next(error);
+	}
+}
+
+async function deleteContact(req: Request, res: Response, next: NextFunction) {
+	try {
+		const bodySchema = z.object({
+			email: z.string(),
+			password: z.string(),
+		});
+
+		const { email, password } = bodySchema.parse(req.body);
+
+		return res.status(201).json({ email, password });
+	} catch (error) {
+		logger({
+			message: error as string,
+			type: 'error',
+		});
+
+		next(error);
+	}
+}
+
+export { getAllContacts, createContact, editContact, deleteContact };

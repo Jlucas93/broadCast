@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-const HealthCheckRoute = Router();
+const healthCheckRoute = Router();
 
-HealthCheckRoute.get('/', (_req, res) => {
+healthCheckRoute.get('/', (_req, res) => {
 	return res.json({ message: 'Server is running!' });
 });
 
-export default HealthCheckRoute;
+export default healthCheckRoute;
