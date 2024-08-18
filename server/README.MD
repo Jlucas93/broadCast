@@ -1,20 +1,20 @@
 ## API BroadCast
 
-API feita com express e typescript utilizando Firebase para conexão com o banco
+API feita com Express e TypeScript, utilizando Firebase para conexão com o banco.
 
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - Você instalou a versão do Node 20.9.0.
-- Você tem uma máquina Windows ou Linux ou Mac.
-- Você leu esse documento por completo.
+- Você tem uma máquina Windows, Linux ou Mac.
+- Você leu este documento por completo.
 
 ## 🚀 Instalando
 
 Para instalar o projeto, siga estas etapas:
 
-- Abra o projeto no VSCode e instale as depedências:
+- Abra o projeto no VSCode e instale as dependências:
 
 ```
 npm install
@@ -22,16 +22,16 @@ ou
 yarn
 ```
 
-- Terceriro, copie o arquivo .env.example e modifique para .env.
+- Em seguida, copie o arquivo .env.example e renomeie para .env
 
 > [!TIP]
-> É necessário mudar suas envs para conectar ao banco de dados
+> É necessário alterar suas variáveis de ambiente para conectar ao banco de dados.
 
 ## 🖥️ Rodar
 
 ### ☕ Local
 
-Para rodar o projeto rode o comando
+Para rodar o projeto localmente, execute o comando:
 
 ```
 
@@ -53,7 +53,7 @@ yarn build
 
 ```
 
-- Em seguida rode o comando:
+- Em seguida, execute o comando:
 
 ```
 
@@ -65,14 +65,14 @@ yarn start
 
 ## 📖 Dependências
 
-- express: Framewrokd para construir a API com node de maneira mais rápida e fácil.
-- cors: Biblioteca para habilitar CORS
-- bcryptjs: Biblioteca para salvar uma senha com hash.
-- lightlogging: Biblioteca para gerar logs de fácil visualização e armazenar sempre os ultimos 6 meses de log de maneira organziada.
-- dotenv: Biblioteca para lidar com arquivos de envs
+- express: Framework para construir a API com Node de maneira mais rápida e fácil.
+- cors: Biblioteca para habilitar CORS.
+- bcryptjs: Biblioteca para salvar senhas com hash.
+- lightlogging: Biblioteca para gerar logs de fácil visualização e armazenar sempre os últimos 6 meses de logs de maneira organizada.
+- dotenv: Biblioteca para lidar com arquivos de variáveis de ambiente.
 - firebase: Biblioteca para conectar ao banco de dados.
-- firebase-admin: Biblioteca para codificar um token e garantir segurança nas rotas necessárias
-- zod: Biblioteca para validação de dados nas requisições e garantir envs necessárias.
+- firebase-admin: Biblioteca para codificar um token e garantir segurança nas rotas necessárias.
+- zod: Biblioteca para validação de dados nas requisições e garantir variáveis de ambiente necessárias.
 
 ## 🗎 Variáveis de Ambiente Essenciais para Executar o Projeto
 
@@ -104,4 +104,4 @@ yarn start
 
 ## 🫙 Docker
 
-Esse projeto possui um docker compose para a instalação da api.
+Este projeto possui um Docker Compose para a instalação da API.

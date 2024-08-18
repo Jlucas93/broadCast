@@ -1,8 +1,8 @@
 # BroadCast APP
 
-Aplicativo que permite criar sua própia lista de contatos, conexões de whatsapp e criar lista de tramissões para os contatos desejados.
+Aplicativo que permite criar sua própria lista de contatos, conexões de WhatsApp e criar listas de transmissões para os contatos desejados.
 
-O app já foi dado deploy na vercel e pode ser acessado no link:
+O app já foi dado deploy na Vercel e pode ser acessado no link:
 
 ```
 https://broad-cast-pied.vercel.app/
@@ -11,7 +11,7 @@ https://broad-cast-pied.vercel.app/
 
 ## 🚀 Instruções
 
-O Projeto está divido em duas partes, o client, onde se encontra o front em NextJs e na pasta server onde se encontra o back em express, siga as instruções nas respectivas pastas.
+O projeto está dividido em duas partes: o client, onde se encontra o front em Next.js, e a pasta server, onde se encontra o back em Express. Siga as instruções nas respectivas pastas.
 
 ## 📝 Licença
 

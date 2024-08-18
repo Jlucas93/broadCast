@@ -1,6 +1,6 @@
 ## WEB BroadCast
 
-App feito com NextJs e typescript, para cadastro de contato, Conexões de WhatsAPP e Lista de trasnmissões
+App feito com Next.js e TypeScript para cadastro de contatos, conexões de WhatsApp e lista de transmissões.
 
 ## 💻 Pré-requisitos
 
@@ -14,7 +14,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 Para instalar o projeto, siga estas etapas:
 
-- Abra o projeto no VSCode e instale as depedências:
+- Abra o projeto no VSCode e instale as dependências:
 
 ```
 npm install
@@ -22,7 +22,7 @@ ou
 yarn
 ```
 
-- Terceriro, copie o arquivo .env.example e modifique para .env.
+- Em seguida, copie o arquivo `.env.example` e renomeie para `.env`.
 
 > [!TIP]
 > É necessário mudar suas envs para conectar a API
@@ -31,7 +31,7 @@ yarn
 
 ### ☕ Local
 
-Para rodar o projeto rode o comando
+Para rodar o projeto localmente, execute o comando:
 
 ```
 
@@ -43,7 +43,7 @@ yarn dev
 
 ### ☕ Para build
 
-Para realizar o build do projeto basta executar o comando:
+Para realizar o build do projeto, basta executar o comando:
 
 ```
 
