@@ -6,7 +6,7 @@ import {
   Checkbox,
   ListItemText,
   SelectChangeEvent,
-} from "@mui/material";
+} from '@mui/material';
 
 interface SelectOption {
   value: string | number;

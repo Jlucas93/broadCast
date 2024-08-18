@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -6,11 +6,11 @@ import {
   useCallback,
   useContext,
   useMemo,
-} from "react";
+} from 'react';
 
-import { usePathname } from "next/navigation";
+import { usePathname } from 'next/navigation';
 
-import Layout from "@/layout";
+import Layout from '@/layout';
 
 interface LayoutContextType {
   toogleFull(): void;
@@ -19,7 +19,7 @@ interface LayoutContextType {
 const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
 
 export default function LayoutProvider({ children }: { children: ReactNode }) {
-  const noLayoutRoutes = ["/", "/signup"];
+  const noLayoutRoutes = ['/', '/signup'];
   const location = usePathname();
 
   const shouldApplyLayout = !noLayoutRoutes.includes(location);
@@ -50,7 +50,7 @@ function useLayout() {
   const context = useContext(LayoutContext);
 
   if (!context) {
-    throw new Error("useLayout precisa ser usado com o LayoutContext!");
+    throw new Error('useLayout precisa ser usado com o LayoutContext!');
   }
 
   return context;

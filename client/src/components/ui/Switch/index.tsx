@@ -1,8 +1,8 @@
 // src/components/SwitchComponent.tsx
-import React from "react";
+import React from 'react';
 
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 interface SwitchComponentProps {
   checked: boolean;
@@ -21,7 +21,7 @@ export default function CustomSwitch({
         control={
           <Switch checked={checked} onChange={onChange} color="primary" />
         }
-        label={label || "Ativar"}
+        label={label || 'Ativar'}
       />
     </div>
   );

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps, ReactNode } from 'react';
 
-import { twMerge } from "tailwind-merge";
+import { twMerge } from 'tailwind-merge';
 
-type IPageProps = ComponentProps<"div"> & {
+type IPageProps = ComponentProps<'div'> & {
   children: ReactNode;
 };
 
@@ -17,7 +17,7 @@ export default function Page({
   return (
     <div
       className={twMerge(
-        "w-full h-full flex flex-col items-start justify-start p-4 bg-primary-light",
+        'w-full h-full flex flex-col items-start justify-start p-4 bg-primary-light',
         className,
       )}
       {...rest}

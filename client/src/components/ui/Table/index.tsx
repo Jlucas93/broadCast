@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Table,
@@ -8,7 +8,7 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from "@mui/material";
+} from '@mui/material';
 
 interface ITableColumn {
   id: string;
@@ -43,7 +43,7 @@ export default function CustomTable({ columns, data }: IProps) {
             <TableRow key={crypto.randomUUID()}>
               {columns.map((column) => (
                 <TableCell key={column.id} align="center">
-                  {column.id === "actions" ? (
+                  {column.id === 'actions' ? (
                     <div className="flex items-center justify-center gap-2">
                       {row[column.id]}
                     </div>

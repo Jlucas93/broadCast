@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   createContext,
@@ -7,14 +7,14 @@ import {
   useContext,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 
-import { destroyCookie, setCookie, parseCookies } from "nookies";
+import { destroyCookie, setCookie, parseCookies } from 'nookies';
 
-import { IAuthContextType } from "@/interfaces";
-import api from "@/services/api";
+import { IAuthContextType } from '@/interfaces';
+import api from '@/services/api';
 
-import { cleanAuthorization, saveAuthorization } from "./utils";
+import { cleanAuthorization, saveAuthorization } from './utils';
 
 const AuthContext = createContext<IAuthContextType | undefined>(undefined);
 
@@ -22,8 +22,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuth, setIsAuth] = useState(false);
   const [datas, setDatas] = useState(() => {
     const cookies = parseCookies();
-    const user = cookies["@user"] || "";
-    const token = cookies["@token"] || "";
+    const user = cookies['@user'] || '';
+    const token = cookies['@token'] || '';
 
     const parseUser = user ? JSON.parse(user) : null;
     const parseToken = token ? JSON.parse(token) : null;
@@ -39,16 +39,16 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       password: string;
     }): Promise<{ success: boolean }> => {
       try {
-        const { data } = await api.post("auth/login", userData);
+        const { data } = await api.post('auth/login', userData);
 
-        setCookie(null, "@user", JSON.stringify(data.user), {
+        setCookie(null, '@user', JSON.stringify(data.user), {
           maxAge: 3 * 24 * 60 * 60, // 3 days
-          path: "/",
+          path: '/',
         });
 
-        setCookie(null, "@token", JSON.stringify(data.token), {
+        setCookie(null, '@token', JSON.stringify(data.token), {
           maxAge: 3 * 24 * 60 * 60, // 3 days
-          path: "/",
+          path: '/',
         });
 
         saveAuthorization(data.token);
@@ -69,8 +69,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const signOut = useCallback(async () => {
-    destroyCookie(null, "@user");
-    destroyCookie(null, "@token");
+    destroyCookie(null, '@user');
+    destroyCookie(null, '@token');
     setIsAuth(false);
     cleanAuthorization();
   }, []);
@@ -93,7 +93,7 @@ function useAuth() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth precisa ser usado com o AuthProvider!");
+    throw new Error('useAuth precisa ser usado com o AuthProvider!');
   }
 
   return context;

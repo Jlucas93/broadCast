@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 
 const CustomInput = forwardRef<HTMLInputElement, TextFieldProps>(
   (props, ref) => {
@@ -8,5 +8,5 @@ const CustomInput = forwardRef<HTMLInputElement, TextFieldProps>(
   },
 );
 
-CustomInput.displayName = "CustomInput";
+CustomInput.displayName = 'CustomInput';
 export default CustomInput;

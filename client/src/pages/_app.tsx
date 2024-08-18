@@ -1,11 +1,11 @@
-import "@/styles/globals.css";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import '@/styles/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
-import type { AppProps } from "next/app";
+import type { AppProps } from 'next/app';
 
-import { AuthProvider } from "@/contexts/Auth";
-import { LayoutProvider } from "@/contexts/Layout";
+import { AuthProvider } from '@/contexts/Auth';
+import { LayoutProvider } from '@/contexts/Layout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

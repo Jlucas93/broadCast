@@ -17,8 +17,8 @@ export interface IBroadcast {
   status: string;
   sendDate: string;
   sendTime: string;
-  contactsIDs: string[];
   connectionID: string;
+  contactsIDs: string[];
 }
 
 export interface IUser {

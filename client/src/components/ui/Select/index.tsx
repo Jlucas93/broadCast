@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
   Select,
@@ -6,7 +6,7 @@ import {
   FormControl,
   InputLabel,
   SelectChangeEvent,
-} from "@mui/material";
+} from '@mui/material';
 
 interface SelectOption {
   value: string | number;

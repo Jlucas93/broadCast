@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-import { useAuth } from "@/contexts/Auth";
-import ContactPageIcon from "@mui/icons-material/ContactPage";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import PodcastsIcon from "@mui/icons-material/Podcasts";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import IconButton from "@mui/material/IconButton";
+import { useAuth } from '@/contexts/Auth';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import PodcastsIcon from '@mui/icons-material/Podcasts';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import IconButton from '@mui/material/IconButton';
 
 export default function Sidebar() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Sidebar() {
 
   async function handleLogout() {
     signOut();
-    router.push("/");
+    router.push('/');
   }
 
   return (
@@ -28,16 +28,16 @@ export default function Sidebar() {
         <IconButton
           type="button"
           aria-label="contact"
-          onClick={() => handleNavigate("/contact")}
-          sx={{ color: "white" }}
+          onClick={() => handleNavigate('/contact')}
+          sx={{ color: 'white' }}
         >
           <ContactPageIcon />
         </IconButton>
         <IconButton
           type="button"
           aria-label="contact"
-          onClick={() => handleNavigate("/connections")}
-          sx={{ color: "white" }}
+          onClick={() => handleNavigate('/connections')}
+          sx={{ color: 'white' }}
         >
           <WhatsAppIcon />
         </IconButton>
@@ -45,8 +45,8 @@ export default function Sidebar() {
         <IconButton
           type="button"
           aria-label="contact"
-          onClick={() => handleNavigate("/broadcast")}
-          sx={{ color: "white" }}
+          onClick={() => handleNavigate('/broadcast')}
+          sx={{ color: 'white' }}
         >
           <PodcastsIcon />
         </IconButton>
@@ -57,7 +57,7 @@ export default function Sidebar() {
           type="button"
           aria-label="contact"
           onClick={() => handleLogout()}
-          sx={{ color: "white" }}
+          sx={{ color: 'white' }}
         >
           <MeetingRoomIcon />
         </IconButton>
