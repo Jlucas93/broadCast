@@ -1,22 +1,14 @@
 'use client';
 
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-} from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
 import { usePathname } from 'next/navigation';
 
 import Layout from '@/layout';
 
-interface LayoutContextType {
-  toogleFull(): void;
-}
+type LayoutContextType = null;
 
-const LayoutContext = createContext<LayoutContextType | undefined>(undefined);
+const LayoutContext = createContext<LayoutContextType | undefined>(null);
 
 export default function LayoutProvider({ children }: { children: ReactNode }) {
   const noLayoutRoutes = ['/', '/signup'];
@@ -24,23 +16,8 @@ export default function LayoutProvider({ children }: { children: ReactNode }) {
 
   const shouldApplyLayout = !noLayoutRoutes.includes(location);
 
-  const toogleFull = useCallback(() => {
-    if (document.fullscreenElement) {
-      document
-        .exitFullscreen()
-        .then(() => {})
-        .catch(() => {});
-    } else {
-      document.documentElement.requestFullscreen();
-    }
-  }, []);
-
-  const context = useMemo(() => {
-    return { toogleFull };
-  }, [toogleFull]);
-
   return (
-    <LayoutContext.Provider value={context}>
+    <LayoutContext.Provider value={null}>
       {shouldApplyLayout ? <Layout>{children}</Layout> : children}
     </LayoutContext.Provider>
   );
