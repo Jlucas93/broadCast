@@ -6,6 +6,7 @@ interface IBroadcast {
   active?: boolean;
   sendDate?: string;
   sendTime?: string;
+  boradcastMessage?: string;
   status?: string;
   userId?: string;
   connectionID: string;

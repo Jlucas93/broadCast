@@ -38,6 +38,7 @@ const formschema = z
     id: z.string().or(z.undefined()),
     name: z.string().min(1, 'Nome da transmissão é obrigatório'),
     status: z.string(),
+    broadcastMessage: z.string(),
     sendDate: z.string().optional(),
     sendTime: z.string().optional(),
     contactsIDs: z
@@ -88,6 +89,7 @@ export function BroadcastModal({ open, onClose, broadcast, refetch }: IProps) {
           connectionID: broadcast.connectionID,
           contactsIDs: broadcast.contactsIDs,
           status: broadcast.status,
+          broadcastMessage: broadcast.broadcastMessage,
           sendDate: broadcast.sendDate || '',
           sendTime: broadcast.sendTime || '',
         }
@@ -98,6 +100,7 @@ export function BroadcastModal({ open, onClose, broadcast, refetch }: IProps) {
           contactsIDs: [],
           status: 'send',
           sendDate: '',
+          broadcastMessage: '',
           sendTime: '',
         },
   });
@@ -312,6 +315,20 @@ export function BroadcastModal({ open, onClose, broadcast, refetch }: IProps) {
                 </>
               )}
             </div>
+
+            <Controller
+              name="broadcastMessage"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  label="Mensagem"
+                  multiline
+                  rows={4}
+                  fullWidth
+                  {...field}
+                />
+              )}
+            />
 
             <div className="w-full flex items-center justify-end p-2 gap-3">
               <CustomButton

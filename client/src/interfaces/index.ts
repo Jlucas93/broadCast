@@ -16,6 +16,7 @@ export interface IBroadcast {
   name: string;
   status: string;
   sendDate: string;
+  broadcastMessage: string;
   sendTime: string;
   connectionID: string;
   connectionName: string;
