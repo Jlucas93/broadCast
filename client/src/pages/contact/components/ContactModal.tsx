@@ -9,7 +9,6 @@ import { z } from 'zod';
 import { CustomModal, CustomButton, CustomInput } from '@/components/ui';
 import { IContact } from '@/interfaces';
 import { createContact, updateContact } from '@/services/contact.service';
-import { maskInputPhoneNumber, unmaskPhoneNumber } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
@@ -31,7 +30,7 @@ type HandleUpdateFormData = z.infer<typeof formschema>;
 export function ContactModal({ open, onClose, contact, refetch }: IProps) {
   const [loading, setLoading] = useState(false);
 
-  const { handleSubmit, register, setValue } = useForm<HandleUpdateFormData>({
+  const { handleSubmit, register } = useForm<HandleUpdateFormData>({
     resolver: zodResolver(formschema),
 
     defaultValues: contact
@@ -52,10 +51,7 @@ export function ContactModal({ open, onClose, contact, refetch }: IProps) {
     setLoading(true);
 
     if (contact && contact.id) {
-      const { success, message } = await updateContact(contact.id, {
-        ...values,
-        phone: unmaskPhoneNumber(values.phone),
-      });
+      const { success, message } = await updateContact(contact.id, values);
 
       if (success) {
         refetch();
@@ -72,10 +68,7 @@ export function ContactModal({ open, onClose, contact, refetch }: IProps) {
       return;
     }
 
-    const { success, message } = await createContact({
-      ...values,
-      phone: unmaskPhoneNumber(values.phone),
-    });
+    const { success, message } = await createContact(values);
 
     if (success) {
       refetch();
@@ -131,9 +124,7 @@ export function ContactModal({ open, onClose, contact, refetch }: IProps) {
                 type="text"
                 label="Telefone"
                 required
-                onChange={(e) =>
-                  setValue('phone', maskInputPhoneNumber(e.target.value))
-                }
+                {...register('phone')}
               />
             </div>
 
