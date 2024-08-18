@@ -5,7 +5,7 @@ Aplicativo que permite criar sua própia lista de contatos, conexões de whatsap
 O app já foi dado deploy na vercel e pode ser acessado no link:
 
 ```
-https://broad-cast-pied.vercel.app/signup
+https://broad-cast-pied.vercel.app/
 
 ```
 
