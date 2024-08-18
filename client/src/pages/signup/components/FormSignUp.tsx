@@ -49,7 +49,10 @@ export default function FormSignUp() {
       router.push('/');
     } catch (error) {
       console.error(error);
-      toast.error('Erro ao fazer cadastro');
+      toast.error(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (error as any)?.response?.data?.message || 'Erro ao fazer cadastro',
+      );
     }
 
     setLoading(false);
