@@ -12,11 +12,12 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { IconButton } from '@mui/material';
+import { CircularProgress, IconButton } from '@mui/material';
 
 import ConnectionModal from './ConnectionModal';
 
 export default function ConnectionList() {
+  const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [connections, setConnections] = useState<IConnection[]>([]);
@@ -28,7 +29,9 @@ export default function ConnectionList() {
   >(undefined);
 
   async function fetchConnections() {
+    setLoading(true);
     const { data, success } = await getConnections();
+    setLoading(false);
 
     if (!success) {
       toast.error('Erro ao buscar conexões!');
@@ -80,48 +83,53 @@ export default function ConnectionList() {
           Cadastrar
         </CustomButton>
       </div>
-      {connections.map((connection) => (
-        <div
-          key={connection.id}
-          className={`flex flex-col justify-start items-center gap-4 w-96 h-30 p-4 bg-primary-base
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          {connections.map((connection) => (
+            <div
+              key={connection.id}
+              className={`flex flex-col justify-start items-center gap-4 w-96 h-30 p-4 bg-primary-base
             border-2 rounded-lg shadow-lg bg-gray-800 text-white `}
-        >
-          <div className="w-full flex justify-start items-center font-bold text-5">
-            {connection.name}
-          </div>
-          <div className="w-full flex justify-between items-center">
-            <p>
-              Status:{' '}
-              <span
-                className={`${
-                  connection.active ? 'text-successBase' : 'text-dangerBase'
-                }`}
-              >
-                {connection.active ? ' Ativa' : 'Inativa'}
-              </span>
-            </p>
-            <div className="w-auto flex-row justify-between items-center ">
-              <IconButton
-                onClick={() => handleEditConnection(connection)}
-                size="small"
-                color="primary"
-                sx={{ color: 'white' }}
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => handleDeleteClick(connection.id)}
-                size="small"
-                color="primary"
-                sx={{ color: 'white' }}
-              >
-                <DeleteIcon />
-              </IconButton>
+            >
+              <div className="w-full flex justify-start items-center font-bold text-5">
+                {connection.name}
+              </div>
+              <div className="w-full flex justify-between items-center">
+                <p>
+                  Status:{' '}
+                  <span
+                    className={`${
+                      connection.active ? 'text-successBase' : 'text-dangerBase'
+                    }`}
+                  >
+                    {connection.active ? ' Ativa' : 'Inativa'}
+                  </span>
+                </p>
+                <div className="w-auto flex-row justify-between items-center ">
+                  <IconButton
+                    onClick={() => handleEditConnection(connection)}
+                    size="small"
+                    color="primary"
+                    sx={{ color: 'white' }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => handleDeleteClick(connection.id)}
+                    size="small"
+                    color="primary"
+                    sx={{ color: 'white' }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-
+          ))}
+        </>
+      )}
       {openModal ? (
         <ConnectionModal
           open={openModal}

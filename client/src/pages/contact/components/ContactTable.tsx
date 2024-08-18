@@ -9,6 +9,7 @@ import { getContacts, deleteContact } from '@/services/contact.service';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { CircularProgress } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 
 import ContactModal from './ContactModal';
@@ -21,6 +22,7 @@ const columns = [
 ];
 
 export default function ContactTable() {
+  const [loading, setLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [contacts, setContacts] = useState<IContact[]>([]);
@@ -30,7 +32,10 @@ export default function ContactTable() {
   const [contactToDelete, setContactToDelete] = useState<string | null>(null);
 
   async function fetchContacts() {
+    setLoading(true);
     const { data, success } = await getContacts();
+
+    setLoading(false);
 
     if (!success) {
       toast.error('Erro ao buscar contatos!');
@@ -83,26 +88,29 @@ export default function ContactTable() {
         </CustomButton>
       </div>
 
-      <CustomTable
-        columns={columns}
-        data={contacts.map((row) => ({
-          ...row,
-          actions: (
-            <div className="flex gap-2">
-              <IconButton aria-label="edit" onClick={() => handleEdit(row)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                aria-label="Delete"
-                onClick={() => handleDeleteClick(row.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </div>
-          ),
-        }))}
-      />
-
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <CustomTable
+          columns={columns}
+          data={contacts.map((row) => ({
+            ...row,
+            actions: (
+              <div className="flex gap-2">
+                <IconButton aria-label="edit" onClick={() => handleEdit(row)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="Delete"
+                  onClick={() => handleDeleteClick(row.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+            ),
+          }))}
+        />
+      )}
       {openModal ? (
         <ContactModal
           open={openModal}
