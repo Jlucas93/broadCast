@@ -38,10 +38,11 @@ const config: Config = {
       warningDark: '#F1FA8C',
 
       gray: '#c6cdd5',
+      grayLight: '#d9e3f3',
       pink: '#FF79C6',
       purple: '#9580ff',
       purpleDark: '#6E40C9',
-      // #5944c3
+
       cyan: '#8BE9FD',
       blue: '#1976D2',
 
@@ -49,10 +50,6 @@ const config: Config = {
         30: '#ffffff30',
         60: '#ffffff60',
       },
-
-      cookiebar: '#0c1e3fd9',
-
-      upload: '#d9e3f3',
 
       dropdown: {
         hover: '#dedede',

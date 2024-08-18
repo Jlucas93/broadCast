@@ -27,7 +27,7 @@ interface IProps {
 
 export default function CustomTable({ columns, data }: IProps) {
   return (
-    <TableContainer component={Paper} className="bg-gray">
+    <TableContainer component={Paper} className="bg-grayLight">
       <Table>
         <TableHead>
           <TableRow>
