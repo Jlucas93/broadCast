@@ -7,11 +7,9 @@ import {
 	getDocs,
 	addDoc,
 } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
 
-import { firebaseApp } from '../../database';
+import { firebaseApp, fireabaseAdmin } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
-
 interface IProps {
 	name: string;
 	email: string;
@@ -31,8 +29,16 @@ export async function singupService({ name, email, password }: IProps) {
 		);
 	}
 
+	const user = await fireabaseAdmin.createUser({
+		email,
+		emailVerified: false,
+		password,
+		displayName: name,
+		disabled: false,
+	});
+
 	const newUser = {
-		id: uuidv4(),
+		id: user.uid,
 		name,
 		email,
 		password: bcrypt.hashSync(password, 8),

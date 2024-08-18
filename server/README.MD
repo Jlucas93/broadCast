@@ -68,11 +68,10 @@ yarn start
 - express: Framewrokd para construir a API com node de maneira mais rápida e fácil.
 - cors: Biblioteca para habilitar CORS
 - bcryptjs: Biblioteca para salvar uma senha com hash.
-- uuid: Biblioteca para gerar IDs únicos.
 - lightlogging: Biblioteca para gerar logs de fácil visualização e armazenar sempre os ultimos 6 meses de log de maneira organziada.
 - dotenv: Biblioteca para lidar com arquivos de envs
 - firebase: Biblioteca para conectar ao banco de dados.
-- jsonwebtoken: Biblioteca para codificar um token e garantir segurança nas rotas necessárias
+- firebase-admin: Biblioteca para codificar um token e garantir segurança nas rotas necessárias
 - zod: Biblioteca para validação de dados nas requisições e garantir envs necessárias.
 
 ## 🗎 Variaveis de Ambiente Essenciais executar o projeto

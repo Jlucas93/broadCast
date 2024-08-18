@@ -17,6 +17,7 @@ interface IBroadcast {
 	sendDate?: string;
 	sendTime?: string;
 	connectionID?: string;
+	broadcastMessages?: string;
 	userID: string;
 	contactsIDs?: string[];
 }

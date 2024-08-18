@@ -38,6 +38,7 @@ async function createBroadcast(
 		const bodySchema = z.object({
 			name: z.string(),
 			status: z.string(),
+			broadcastMessage: z.string(),
 			sendDate: z.string(),
 			sendTime: z.string(),
 			connectionID: z.string(),
@@ -46,8 +47,15 @@ async function createBroadcast(
 
 		const userID = req.user?.id as string;
 
-		const { name, status, sendDate, sendTime, connectionID, contactsIDs } =
-			bodySchema.parse(req.body);
+		const {
+			name,
+			status,
+			sendDate,
+			sendTime,
+			connectionID,
+			contactsIDs,
+			broadcastMessage,
+		} = bodySchema.parse(req.body);
 
 		const { message } = await createBroadcastService({
 			name,
@@ -56,6 +64,7 @@ async function createBroadcast(
 			sendTime,
 			connectionID,
 			contactsIDs,
+			broadcastMessage,
 			userID,
 		});
 
@@ -106,6 +115,7 @@ async function updateBroadcast(
 		const bodySchema = z.object({
 			name: z.string().optional(),
 			status: z.string().optional(),
+			broadcastMessage: z.string().optional(),
 			sendDate: z.string().optional(),
 			sendTime: z.string().optional(),
 			connectionID: z.string().optional(),
@@ -132,4 +142,5 @@ async function updateBroadcast(
 		next(error);
 	}
 }
+
 export { getAllBroadcasts, createBroadcast, deleteBroadcast, updateBroadcast };

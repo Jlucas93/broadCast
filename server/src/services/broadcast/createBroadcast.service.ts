@@ -14,6 +14,7 @@ import { InvalidRequestError } from '../../errors/AppError';
 interface IBroadcast {
 	name: string;
 	status: string;
+	broadcastMessage: string;
 	sendDate: string;
 	sendTime: string;
 	connectionID: string;
@@ -70,6 +71,7 @@ export async function createBroadcastService(
 		sendTime: broadcastData.sendTime,
 		connectionID: broadcastData.connectionID,
 		connectionName,
+		broadcastMessage: broadcastData.broadcastMessage,
 		userID: broadcastData.userID,
 		contactsIDs: broadcastData.contactsIDs,
 		createdAt: new Date(),

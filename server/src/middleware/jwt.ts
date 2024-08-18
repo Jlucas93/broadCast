@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { signInWithCustomToken } from 'firebase/auth';
 import {
 	getFirestore,
 	getDocs,
@@ -6,10 +7,8 @@ import {
 	query,
 	where,
 } from 'firebase/firestore';
-import jwt from 'jsonwebtoken';
 
-import authConfig from '../config/auth';
-import { firebaseApp } from '../database';
+import { firebaseApp, firebaseAuth } from '../database';
 
 interface IUser {
 	id: string;
@@ -21,31 +20,28 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {
-		return res.status(401).json({ error: 'Token not provided' });
+		return res.status(401).json({ error: 'Token não fornecido' });
 	}
 
 	const [, token] = authHeader.split(' ');
 
 	try {
-		const decoded = jwt.verify(token, authConfig.secret) as unknown as {
-			id: string;
-			email: string;
-			userID: string;
-			iat: string;
-			exp: string;
-		};
+		const decodedToken = await signInWithCustomToken(firebaseAuth, token);
+
+		const { user } = decodedToken;
 
 		const db = getFirestore(firebaseApp);
 		const usersCollection = collection(db, 'users');
-		const userQuery = query(usersCollection, where('id', '==', decoded.userID));
+		const userQuery = query(usersCollection, where('id', '==', user.uid));
 		const userSnapshot = await getDocs(userQuery);
 
 		if (userSnapshot.empty) {
 			return res.status(401).json({ error: 'User not found' });
 		}
 
-		const user = userSnapshot.docs[0].data() as IUser;
-		req.user = user;
+		const loggedUser = userSnapshot.docs[0].data() as IUser;
+
+		req.user = loggedUser;
 
 		return next();
 	} catch (error) {
