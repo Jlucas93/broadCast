@@ -23,10 +23,7 @@ export async function singupService({ name, email, password }: IProps) {
 	const userSnapshot = await getDocs(userQuery);
 
 	if (!userSnapshot.empty) {
-		throw new InvalidRequestError(
-			'Usuário com esse email já existe no banco',
-			403,
-		);
+		throw new InvalidRequestError('Esse email já está em uso', 403);
 	}
 
 	const user = await fireabaseAdmin.createUser({
