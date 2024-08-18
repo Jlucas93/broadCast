@@ -74,4 +74,4 @@ yarn build
 
 ## 🗎 Variaveis de Ambiente Essenciais executar o projeto
 
-- NEXT_PUBLIC_BASE_API_URL: Definição do do link da sua API.
+- **NEXT_PUBLIC_BASE_API_URL**: Definição do do link da sua API.
