@@ -3,25 +3,46 @@ import z from 'zod';
 
 import {
 	getAllConnectionsService,
+	getActiveConnectionsService,
 	createConnectionService,
 	deleteConnectionService,
 	updateConnectionService,
 } from '../services/connections';
 import { logger } from '../utils';
 
-async function getAllConnection(
+async function getAllConnections(
 	req: Request,
 	res: Response,
 	next: NextFunction,
 ) {
 	try {
-		const userId = req.user?.id as string;
-		const { connections } = await getAllConnectionsService({ userId });
+		const userID = req.user?.id as string;
+		const { connections } = await getAllConnectionsService({ userID });
 
 		return res.status(200).json(connections);
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
+			type: 'error',
+		});
+
+		next(error);
+	}
+}
+
+async function getActiveConnections(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
+	try {
+		const userID = req.user?.id as string;
+		const { connections } = await getActiveConnectionsService({ userID });
+
+		return res.status(200).json(connections);
+	} catch (error) {
+		logger({
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -40,20 +61,20 @@ async function createConnection(
 			name: z.string(),
 		});
 
-		const userId = req.user?.id as string;
+		const userID = req.user?.id as string;
 
 		const { active, name } = bodySchema.parse(req.body);
 
 		const { message } = await createConnectionService({
 			active,
 			name,
-			userId,
+			userID,
 		});
 
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -68,6 +89,7 @@ async function updateConnection(
 ) {
 	try {
 		const bodySchema = z.object({
+			id: z.string().or(z.undefined()),
 			name: z.string().or(z.undefined()),
 			active: z.boolean().or(z.undefined()),
 		});
@@ -83,6 +105,7 @@ async function updateConnection(
 			connection: {
 				name,
 				active,
+				userID: req.user?.id as string,
 			},
 			id,
 		});
@@ -90,7 +113,7 @@ async function updateConnection(
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -110,12 +133,14 @@ async function deleteConnection(
 
 		const { id } = paramsSchema.parse(req.params);
 
-		const { message } = await deleteConnectionService({ id });
+		const userID = req.user?.id as string;
+
+		const { message } = await deleteConnectionService({ id, userID });
 
 		return res.status(200).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -124,7 +149,8 @@ async function deleteConnection(
 }
 
 export {
-	getAllConnection,
+	getAllConnections,
+	getActiveConnections,
 	createConnection,
 	updateConnection,
 	deleteConnection,

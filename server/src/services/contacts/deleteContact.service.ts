@@ -12,15 +12,21 @@ import { firebaseApp } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
 interface IDeleteContactParams {
 	id: string;
+	userID: string;
 }
 
 export async function deleteContactService({
 	id,
+	userID,
 }: IDeleteContactParams): Promise<{ message: string }> {
 	const db = getFirestore(firebaseApp);
 	const contactsCollection = collection(db, 'contacts');
 
-	const contactQuery = query(contactsCollection, where('id', '==', id));
+	const contactQuery = query(
+		contactsCollection,
+		where('id', '==', id),
+		where('userID', '==', userID),
+	);
 	const contactSnapshot = await getDocs(contactQuery);
 
 	if (contactSnapshot.empty) {

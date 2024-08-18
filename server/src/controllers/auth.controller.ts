@@ -23,7 +23,7 @@ async function singup(req: Request, res: Response, next: NextFunction) {
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -45,7 +45,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
 		return res.status(201).json({ user, token });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error,
 			type: 'error',
 		});
 

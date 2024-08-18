@@ -14,7 +14,6 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 Para instalar o projeto, siga estas etapas:
 
-
 - Abra o projeto no VSCode e instale as depedências:
 
 ```
@@ -25,10 +24,8 @@ yarn
 
 - Terceriro, copie o arquivo .env.example e modifique para .env.
 
-
 > [!TIP]
 > É necessário mudar suas envs para conectar ao banco de dados
-
 
 ## 🖥️ Rodar
 
@@ -66,22 +63,32 @@ yarn start
 
 ```
 
+## 📖 Dependências
+
+- express: Framewrokd para construir a API com node de maneira mais rápida e fácil.
+- cors: Biblioteca para habilitar CORS
+- bcryptjs: Biblioteca para salvar uma senha com hash.
+- uuid: Biblioteca para gerar IDs únicos.
+- lightlogging: Biblioteca para gerar logs de fácil visualização e armazenar sempre os ultimos 6 meses de log de maneira organziada.
+- dotenv: Biblioteca para lidar com arquivos de envs
+- firebase: Biblioteca para conectar ao banco de dados.
+- jsonwebtoken: Biblioteca para codificar um token e garantir segurança nas rotas necessárias
+- zod: Biblioteca para validação de dados nas requisições e garantir envs necessárias.
+
 ## 🗎 Variaveis de Ambiente Essenciais executar o projeto
 
+- PORT: Opicinal,Definir a porta que será executada a api
 - NODE_ENV: Definição do ambiente, onde pode ser dev, sta, test e prod.
-- JWT_SECRET_KEY
+- APP_SECRET: Chave secreta para codificar o JWT
 
-- AWS_ACCESS_KEY_ID: Chave de acesso da AWS.
-- AWS_SECRET_ACCESS_KEY: Chave secreta de acesso da AWS.
-- AWS_BUCKET: Bucket do S3.
-- AWS_BUCKET_REGION: Região do Bucket do S3.
-
+- As seguintes envs são relacionadas ao firebase
+- API_KEY
+- AUTH_DOMAIN
+- PROJECT_ID
+- STORAGE_BUCKET
+- MESSAGING_SENDER_ID
+- APP_ID
 
 ## 🫙 Docker
 
 Esse projeto possui um docker compose para a instalação da api.
-
-
-## 📝 Licença
-
-Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.

@@ -31,15 +31,14 @@ export async function updateContactService({
 	const contactsCollection = collection(db, 'contacts');
 
 	const contactQuery = query(contactsCollection, where('id', '==', id));
+
 	const contactSnapShot = await getDocs(contactQuery);
 
 	if (contactSnapShot.empty) {
 		throw new InvalidRequestError('Contato não encontrado', 404);
 	}
 
-	const docRef = doc(db, 'contacts', contactSnapShot.docs[0].id);
-
-	if (contact.phone) {
+	if (contact.phone && contact.userID) {
 		const duplicateQuery = query(
 			contactsCollection,
 			where('phone', '==', contact.phone),
@@ -48,11 +47,13 @@ export async function updateContactService({
 
 		const duplicateSnapshot = await getDocs(duplicateQuery);
 
-		const existingContact = duplicateSnapshot.docs.find((doc) => doc.id !== id);
+		const existingContact = duplicateSnapshot.docs.find(
+			(doc) => doc.data().id !== id,
+		);
 
 		if (existingContact) {
 			throw new InvalidRequestError(
-				`Já existe um contato com esse telefone para este usuário.`,
+				'Já existe um contato com esse telefone para este usuário.',
 				400,
 			);
 		}
@@ -62,6 +63,9 @@ export async function updateContactService({
 		...contact,
 		updatedAt: new Date(),
 	};
+
+	const contactDoc = contactSnapShot.docs[0];
+	const docRef = doc(db, 'contacts', contactDoc.id);
 
 	await updateDoc(docRef, updateData);
 

@@ -46,7 +46,7 @@ export async function loginService({ email, password }: LoginProps): Promise<{
 	const token = jwt.sign(
 		{
 			email: user.email,
-			userId: user.id,
+			userID: user.id,
 		},
 		auth.secret,
 		{

@@ -11,13 +11,13 @@ import { logger } from '../utils';
 
 async function getAllContacts(req: Request, res: Response, next: NextFunction) {
 	try {
-		const userId = req.user?.id as string;
-		const { contacts } = await getAllContactsService({ userId });
+		const userID = req.user?.id as string;
+		const { contacts } = await getAllContactsService({ userID });
 
 		return res.status(200).json(contacts);
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -33,7 +33,7 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
 			phone: z.string(),
 		});
 
-		const userId = req.user?.id as string;
+		const userID = req.user?.id as string;
 
 		const { email, phone, name } = bodySchema.parse(req.body);
 
@@ -41,13 +41,13 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
 			email,
 			name,
 			phone,
-			userId,
+			userID,
 		});
 
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -76,6 +76,7 @@ async function updateContact(req: Request, res: Response, next: NextFunction) {
 				email,
 				phone,
 				name,
+				userID: req.user?.id as string,
 			},
 			id,
 		});
@@ -83,7 +84,7 @@ async function updateContact(req: Request, res: Response, next: NextFunction) {
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 
@@ -99,12 +100,14 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
 
 		const { id } = paramsSchema.parse(req.params);
 
-		const { message } = await deleteContactService({ id });
+		const userID = req.user?.id as string;
+
+		const { message } = await deleteContactService({ id, userID });
 
 		return res.status(200).json({ message });
 	} catch (error) {
 		logger({
-			message: error as string,
+			message: error instanceof Error ? error.message : String(error),
 			type: 'error',
 		});
 

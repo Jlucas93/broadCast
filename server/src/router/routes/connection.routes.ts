@@ -1,7 +1,8 @@
 import { Router } from 'express';
 
 import {
-	getAllConnection,
+	getAllConnections,
+	getActiveConnections,
 	createConnection,
 	updateConnection,
 	deleteConnection,
@@ -12,7 +13,8 @@ const connectionRoute = Router();
 
 connectionRoute.use(jwt);
 
-connectionRoute.get('/', getAllConnection);
+connectionRoute.get('/', getAllConnections);
+connectionRoute.get('/active', getActiveConnections);
 connectionRoute.put('/:id', updateConnection);
 connectionRoute.post('/', createConnection);
 connectionRoute.delete('/:id', deleteConnection);

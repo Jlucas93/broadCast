@@ -14,7 +14,7 @@ import { InvalidRequestError } from '../../errors/AppError';
 interface IContact {
 	name?: string;
 	active?: boolean;
-	userId?: string;
+	userID?: string;
 }
 
 interface IUpdateConnectionParams {
@@ -38,17 +38,17 @@ export async function updateConnectionService({
 
 	const docRef = doc(db, 'connections', connectionSnapshot.docs[0].id);
 
-	if (connection.name) {
+	if (connection.name && connection.userID) {
 		const duplicateQuery = query(
 			connectionCollection,
 			where('name', '==', connection.name),
-			where('userId', '==', connection.userId),
+			where('userID', '==', connection.userID),
 		);
 
 		const duplicateSnapshot = await getDocs(duplicateQuery);
 
 		const existingConnection = duplicateSnapshot.docs.find(
-			(doc) => doc.id !== id,
+			(doc) => doc.data().id !== id,
 		);
 
 		if (existingConnection) {

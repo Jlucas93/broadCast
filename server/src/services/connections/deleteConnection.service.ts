@@ -12,15 +12,21 @@ import { firebaseApp } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
 interface IProps {
 	id: string;
+	userID: string;
 }
 
 export async function deleteConnectionService({
 	id,
+	userID,
 }: IProps): Promise<{ message: string }> {
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
 
-	const connectionQuery = query(connectionCollection, where('id', '==', id));
+	const connectionQuery = query(
+		connectionCollection,
+		where('id', '==', id),
+		where('userID', '==', userID),
+	);
 	const connectionSnapshot = await getDocs(connectionQuery);
 
 	if (connectionSnapshot.empty) {

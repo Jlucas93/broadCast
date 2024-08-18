@@ -15,6 +15,7 @@ interface IBroadcast {
 	sendDate: string;
 	sendTime: string;
 	connectionID: string;
+	connectionName: string;
 	userID: string;
 	contactsIDs: string[];
 }
@@ -23,17 +24,17 @@ interface IReturn {
 	broadcasts: IBroadcast[];
 }
 
-export async function getAllBroadcastService({
-	userId,
+export async function getAllBroadcastsService({
+	userID,
 }: {
-	userId: string;
+	userID: string;
 }): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const boradcastCollection = collection(db, 'broadcasts');
 
 	const broadcastQuery = query(
 		boradcastCollection,
-		where('userId', '==', userId),
+		where('userID', '==', userID),
 	);
 
 	const broadcastSnapshot = await getDocs(broadcastQuery);

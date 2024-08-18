@@ -18,17 +18,18 @@ interface IReturn {
 	connections: IConnection[];
 }
 
-export async function getAllConnectionsService({
-	userId,
+export async function getActiveConnectionsService({
+	userID,
 }: {
-	userId: string;
+	userID: string;
 }): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
 
 	const connectionQuery = query(
 		connectionCollection,
-		where('userId', '==', userId),
+		where('userID', '==', userID),
+		where('active', '==', true),
 	);
 	const connectionSnapshot = await getDocs(connectionQuery);
 

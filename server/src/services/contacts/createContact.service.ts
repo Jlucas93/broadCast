@@ -15,7 +15,7 @@ interface IContact {
 	name: string;
 	phone: string;
 	email?: string;
-	userId: string;
+	userID: string;
 }
 
 interface IReturn {
@@ -26,7 +26,7 @@ export async function createContactService({
 	name,
 	phone,
 	email,
-	userId,
+	userID,
 }: IContact): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const contactsCollection = collection(db, 'contacts');
@@ -34,7 +34,7 @@ export async function createContactService({
 	const contactQuery = query(
 		contactsCollection,
 		where('phone', '==', phone),
-		where('userId', '==', userId),
+		where('userID', '==', userID),
 	);
 
 	const contactSnapshot = await getDocs(contactQuery);
@@ -51,7 +51,7 @@ export async function createContactService({
 		name,
 		phone,
 		email,
-		userId,
+		userID,
 		createdAt: new Date(),
 	});
 

@@ -36,6 +36,7 @@ export async function singupService({ name, email, password }: IProps) {
 		name,
 		email,
 		password: bcrypt.hashSync(password, 8),
+		createdAt: new Date(),
 	};
 
 	await addDoc(usersCollection, newUser);

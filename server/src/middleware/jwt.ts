@@ -30,14 +30,14 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 		const decoded = jwt.verify(token, authConfig.secret) as unknown as {
 			id: string;
 			email: string;
-			userId: string;
+			userID: string;
 			iat: string;
 			exp: string;
 		};
 
 		const db = getFirestore(firebaseApp);
 		const usersCollection = collection(db, 'users');
-		const userQuery = query(usersCollection, where('id', '==', decoded.userId));
+		const userQuery = query(usersCollection, where('id', '==', decoded.userID));
 		const userSnapshot = await getDocs(userQuery);
 
 		if (userSnapshot.empty) {

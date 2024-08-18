@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 
 import { AppError } from '../errors/AppError';
+
 export default function errorMiddleware(
 	error: Error | AppError,
 	_req: Request,

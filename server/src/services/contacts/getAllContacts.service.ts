@@ -18,16 +18,16 @@ interface IReturn {
 }
 
 export async function getAllContactsService({
-	userId,
+	userID,
 }: {
-	userId: string;
+	userID: string;
 }): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const contactsCollection = collection(db, 'contacts');
 
 	const contactsQuery = query(
 		contactsCollection,
-		where('userId', '==', userId),
+		where('userID', '==', userID),
 	);
 	const contactsSnapshot = await getDocs(contactsQuery);
 

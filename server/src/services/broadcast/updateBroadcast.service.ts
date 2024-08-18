@@ -1,19 +1,17 @@
 import {
 	getFirestore,
-	doc,
-	getDoc,
+	collection,
 	query,
 	where,
 	getDocs,
+	doc,
 	updateDoc,
-	collection,
 } from 'firebase/firestore';
 
 import { firebaseApp } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
 
-interface IBroadcastUpdate {
-	id: string;
+interface IBroadcast {
 	name?: string;
 	status?: string;
 	sendDate?: string;
@@ -23,49 +21,60 @@ interface IBroadcastUpdate {
 	contactsIDs?: string[];
 }
 
+interface IBroadcasttParams {
+	id: string;
+	broadcast: IBroadcast;
+}
+
 interface IReturn {
 	message: string;
 }
 
-export async function updateBroadcastService(
-	broadcastData: IBroadcastUpdate,
-): Promise<IReturn> {
+export async function updateBroadcastService({
+	broadcast,
+	id,
+}: IBroadcasttParams): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
-	const broadcastRef = doc(db, 'broadcasts', broadcastData.id);
+	const broadcastCollection = collection(db, 'broadcasts');
 
-	const broadcastDoc = await getDoc(broadcastRef);
+	const broadcastQuery = query(broadcastCollection, where('id', '==', id));
 
-	if (!broadcastDoc.exists()) {
-		throw new InvalidRequestError(`Transmissão não encontrada.`, 404);
+	const broadcastSnapshot = await getDocs(broadcastQuery);
+
+	if (broadcastSnapshot.empty) {
+		throw new InvalidRequestError('Transmissão não encontrada.', 404);
 	}
 
-	if (broadcastData.name) {
-		const broadcastQuery = query(
-			collection(db, 'broadcasts'),
-			where('name', '==', broadcastData.name),
-			where('userID', '==', broadcastData.userID),
+	const broadcastDoc = broadcastSnapshot.docs[0];
+	const docRef = doc(db, 'broadcasts', broadcastDoc.id);
+
+	if (broadcast.name && broadcast.userID) {
+		const broadcastNameQuery = query(
+			broadcastCollection,
+			where('name', '==', broadcast.name),
+			where('userID', '==', broadcast.userID),
 		);
 
-		const existingBroadcasts = await getDocs(broadcastQuery);
+		const existingBroadcasts = await getDocs(broadcastNameQuery);
 
 		const existingBroadcast = existingBroadcasts.docs.find(
-			(doc) => doc.id !== broadcastData.id,
+			(doc) => doc.id !== broadcastDoc.id,
 		);
 
 		if (existingBroadcast) {
 			throw new InvalidRequestError(
-				`Já existe uma transmissão com o nome "${broadcastData.name}" para este usuário.`,
+				`Já existe uma transmissão com esse nome para este usuário.`,
 				400,
 			);
 		}
 	}
 
 	const updateData = {
-		...broadcastData,
+		...broadcast,
 		updatedAt: new Date(),
 	};
 
-	await updateDoc(broadcastRef, updateData);
+	await updateDoc(docRef, updateData);
 
 	return {
 		message: 'Transmissão atualizada com sucesso!',

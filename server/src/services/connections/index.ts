@@ -1,11 +1,13 @@
 import { createConnectionService } from './createConnection.service';
 import { deleteConnectionService } from './deleteConnection.service';
-import { getAllConnectionsService } from './getAllConnection.service';
+import { getActiveConnectionsService } from './getActiveConnections.service';
+import { getAllConnectionsService } from './getAllConnections.service';
 import { updateConnectionService } from './updateConnection.service';
 
 export {
-	getAllConnectionsService,
 	createConnectionService,
-	updateConnectionService,
+	getActiveConnectionsService,
 	deleteConnectionService,
+	getAllConnectionsService,
+	updateConnectionService,
 };

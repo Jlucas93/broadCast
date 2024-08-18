@@ -12,7 +12,6 @@ import { firebaseApp } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
 
 interface IBroadcast {
-	id: string;
 	name: string;
 	status: string;
 	sendDate: string;
@@ -31,6 +30,7 @@ export async function createBroadcastService(
 ): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const broadcastCollection = collection(db, 'broadcasts');
+	const connectionsCollection = collection(db, 'connections');
 
 	const broadcastQuery = query(
 		broadcastCollection,
@@ -47,6 +47,21 @@ export async function createBroadcastService(
 		);
 	}
 
+	const connectionQuery = query(
+		connectionsCollection,
+		where('id', '==', broadcastData.connectionID),
+	);
+
+	const connectionSnapshot = await getDocs(connectionQuery);
+	let connectionName = '';
+
+	if (!connectionSnapshot.empty) {
+		const connectionDoc = connectionSnapshot.docs[0].data();
+		connectionName = connectionDoc.name;
+	} else {
+		throw new InvalidRequestError('Conexão não encontrada.', 400);
+	}
+
 	await addDoc(broadcastCollection, {
 		id: uuidv4(),
 		name: broadcastData.name,
@@ -54,6 +69,7 @@ export async function createBroadcastService(
 		sendDate: broadcastData.sendDate,
 		sendTime: broadcastData.sendTime,
 		connectionID: broadcastData.connectionID,
+		connectionName,
 		userID: broadcastData.userID,
 		contactsIDs: broadcastData.contactsIDs,
 		createdAt: new Date(),

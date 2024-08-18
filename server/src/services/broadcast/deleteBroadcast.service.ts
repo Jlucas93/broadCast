@@ -13,15 +13,21 @@ import { InvalidRequestError } from '../../errors/AppError';
 
 interface IProps {
 	id: string;
+	userID: string;
 }
 
 export async function deleteBroadcastService({
 	id,
+	userID,
 }: IProps): Promise<{ message: string }> {
 	const db = getFirestore(firebaseApp);
 	const broadcastCollection = collection(db, 'broadcasts');
 
-	const broadcastQuery = query(broadcastCollection, where('id', '==', id));
+	const broadcastQuery = query(
+		broadcastCollection,
+		where('id', '==', id),
+		where('userID', '==', userID),
+	);
 	const broadcastSnapshot = await getDocs(broadcastQuery);
 
 	if (broadcastSnapshot.empty) {

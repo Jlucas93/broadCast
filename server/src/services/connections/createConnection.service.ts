@@ -14,7 +14,7 @@ import { InvalidRequestError } from '../../errors/AppError';
 interface IConnection {
 	name: string;
 	active: boolean;
-	userId: string;
+	userID: string;
 }
 
 interface IReturn {
@@ -24,7 +24,7 @@ interface IReturn {
 export async function createConnectionService({
 	name,
 	active,
-	userId,
+	userID,
 }: IConnection): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
@@ -32,7 +32,7 @@ export async function createConnectionService({
 	const connectionQuery = query(
 		connectionCollection,
 		where('name', '==', name),
-		where('userId', '==', userId),
+		where('userID', '==', userID),
 	);
 
 	const connectionSnapshot = await getDocs(connectionQuery);
@@ -48,7 +48,7 @@ export async function createConnectionService({
 		id: uuidv4(),
 		name,
 		active,
-		userId,
+		userID,
 		createdAt: new Date(),
 	});
 
