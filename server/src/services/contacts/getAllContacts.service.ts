@@ -13,7 +13,7 @@ interface IContact {
 	phone: string;
 }
 
-interface IGetAllContactsResponse {
+interface IReturn {
 	contacts: IContact[];
 }
 
@@ -21,7 +21,7 @@ export async function getAllContactsService({
 	userId,
 }: {
 	userId: string;
-}): Promise<IGetAllContactsResponse> {
+}): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
 	const contactsCollection = collection(db, 'contacts');
 

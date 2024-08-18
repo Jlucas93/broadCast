@@ -2,19 +2,23 @@ import { Request, Response, NextFunction } from 'express';
 import z from 'zod';
 
 import {
-	getAllContactsService,
-	createContactService,
-	deleteContactService,
-	updateContactService,
-} from '../services/contacts';
+	getAllConnectionsService,
+	createConnectionService,
+	deleteConnectionService,
+	updateConnectionService,
+} from '../services/connections';
 import { logger } from '../utils';
 
-async function getAllContacts(req: Request, res: Response, next: NextFunction) {
+async function getAllConnection(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	try {
 		const userId = req.user?.id as string;
-		const { contacts } = await getAllContactsService({ userId });
+		const { connections } = await getAllConnectionsService({ userId });
 
-		return res.status(200).json(contacts);
+		return res.status(200).json(connections);
 	} catch (error) {
 		logger({
 			message: error as string,
@@ -25,22 +29,24 @@ async function getAllContacts(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-async function createContact(req: Request, res: Response, next: NextFunction) {
+async function createConnection(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	try {
 		const bodySchema = z.object({
-			email: z.string(),
+			status: z.boolean(),
 			name: z.string(),
-			phone: z.string(),
 		});
 
 		const userId = req.user?.id as string;
 
-		const { email, phone, name } = bodySchema.parse(req.body);
+		const { status, name } = bodySchema.parse(req.body);
 
-		const { message } = await createContactService({
-			email,
+		const { message } = await createConnectionService({
+			status,
 			name,
-			phone,
 			userId,
 		});
 
@@ -55,27 +61,28 @@ async function createContact(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-async function updateContact(req: Request, res: Response, next: NextFunction) {
+async function updateConnection(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	try {
 		const bodySchema = z.object({
-			email: z.string().or(z.undefined()),
 			name: z.string().or(z.undefined()),
-			phone: z.string().or(z.undefined()),
+			status: z.boolean().or(z.undefined()),
 		});
 
 		const paramsSchema = z.object({
 			id: z.string(),
 		});
-
 		const { id } = paramsSchema.parse(req.params);
 
-		const { email, name, phone } = bodySchema.parse(req.body);
+		const { status, name } = bodySchema.parse(req.body);
 
-		const { message } = await updateContactService({
-			contact: {
-				email,
-				phone,
+		const { message } = await updateConnectionService({
+			connection: {
 				name,
+				status,
 			},
 			id,
 		});
@@ -91,7 +98,11 @@ async function updateContact(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-async function deleteContact(req: Request, res: Response, next: NextFunction) {
+async function deleteConnection(
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) {
 	try {
 		const paramsSchema = z.object({
 			id: z.string(),
@@ -99,7 +110,7 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
 
 		const { id } = paramsSchema.parse(req.params);
 
-		const { message } = await deleteContactService({ id });
+		const { message } = await deleteConnectionService({ id });
 
 		return res.status(200).json({ message });
 	} catch (error) {
@@ -112,4 +123,9 @@ async function deleteContact(req: Request, res: Response, next: NextFunction) {
 	}
 }
 
-export { getAllContacts, createContact, updateContact, deleteContact };
+export {
+	getAllConnection,
+	createConnection,
+	updateConnection,
+	deleteConnection,
+};

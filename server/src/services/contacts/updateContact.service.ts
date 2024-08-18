@@ -9,12 +9,12 @@ import {
 } from 'firebase/firestore';
 
 import { firebaseApp } from '../../database';
+import { InvalidRequestError } from '../../errors/AppError';
 
 interface IContact {
 	name?: string;
-	phone?: string;
 	email?: string;
-	userId?: string;
+	phone?: string;
 }
 
 interface IUpdateContactParams {
@@ -30,13 +30,13 @@ export async function updateContactService({
 	const contactsCollection = collection(db, 'contacts');
 
 	const contactQuery = query(contactsCollection, where('id', '==', id));
-	const contactSnapshot = await getDocs(contactQuery);
+	const contactSnapShot = await getDocs(contactQuery);
 
-	if (contactSnapshot.empty) {
-		throw new Error('Contato não encontrado');
+	if (contactSnapShot.empty) {
+		throw new InvalidRequestError('Contato não encontrado', 404);
 	}
 
-	const docRef = doc(db, 'contacts', contactSnapshot.docs[0].id);
+	const docRef = doc(db, 'contacts', contactSnapShot.docs[0].id);
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	await updateDoc(docRef, contact as { [x: string]: any });

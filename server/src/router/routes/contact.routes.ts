@@ -10,9 +10,11 @@ import jwt from '../../middleware/jwt';
 
 const contactRoute = Router();
 
-contactRoute.get('/', jwt, getAllContacts);
-contactRoute.post('/', jwt, createContact);
-contactRoute.put('/:id', jwt, updateContact);
-contactRoute.delete('/:id', jwt, deleteContact);
+contactRoute.use(jwt);
+
+contactRoute.get('/', getAllContacts);
+contactRoute.post('/', createContact);
+contactRoute.put('/:id', updateContact);
+contactRoute.delete('/:id', deleteContact);
 
 export default contactRoute;

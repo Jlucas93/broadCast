@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 
 import { firebaseApp } from '../../database';
-
+import { InvalidRequestError } from '../../errors/AppError';
 interface IDeleteContactParams {
 	id: string;
 }
@@ -24,7 +24,7 @@ export async function deleteContactService({
 	const contactSnapshot = await getDocs(contactQuery);
 
 	if (contactSnapshot.empty) {
-		throw new Error('Contato não encontrado');
+		throw new InvalidRequestError('Conato não encontrado', 404);
 	}
 
 	const contactDoc = doc(db, 'contacts', contactSnapshot.docs[0].id);

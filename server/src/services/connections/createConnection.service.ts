@@ -11,10 +11,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { firebaseApp } from '../../database';
 import { InvalidRequestError } from '../../errors/AppError';
 
-interface IContact {
+interface IConnection {
 	name: string;
-	phone: string;
-	email?: string;
+	status: boolean;
 	userId: string;
 }
 
@@ -22,40 +21,38 @@ interface IReturn {
 	message: string;
 }
 
-export async function createContactService({
+export async function createConnectionService({
 	name,
-	phone,
-	email,
+	status,
 	userId,
-}: IContact): Promise<IReturn> {
+}: IConnection): Promise<IReturn> {
 	const db = getFirestore(firebaseApp);
-	const contactsCollection = collection(db, 'contacts');
+	const connectionCollection = collection(db, 'connections');
 
-	const contactQuery = query(
-		contactsCollection,
-		where('phone', '==', phone),
+	const connectioQuery = query(
+		connectionCollection,
+		where('name', '==', name),
 		where('userId', '==', userId),
 	);
 
-	const contactSnapshot = await getDocs(contactQuery);
+	const connectionSnapshot = await getDocs(connectioQuery);
 
-	if (!contactSnapshot.empty) {
+	if (!connectionSnapshot.empty) {
 		throw new InvalidRequestError(
-			'Contato já existe com o mesmo telefone para esse usuário.',
+			'Conexão já existe com esse nome para esse usuário.',
 			400,
 		);
 	}
 
-	await addDoc(contactsCollection, {
+	await addDoc(connectionCollection, {
 		id: uuidv4(),
 		name,
-		phone,
-		email,
+		status,
 		userId,
 		createdAt: new Date(),
 	});
 
 	return {
-		message: 'Contato criado com sucesso!',
+		message: 'Conexão criado com sucesso!',
 	};
 }
