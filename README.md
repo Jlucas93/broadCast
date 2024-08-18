@@ -2,7 +2,7 @@
 
 Aplicativo que permite criar sua própia lista de contatos, conexões de whatsapp e criar lista de tramissões para os contatos desejados.
 
-O app já foi dado deploy e pode ser acessado no link:
+O app já foi dado deploy na vercel e pode ser acessado no link:
 
 ```
 https://broad-cast-pied.vercel.app/signup
