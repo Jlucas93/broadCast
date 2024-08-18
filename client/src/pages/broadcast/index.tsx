@@ -1,19 +1,18 @@
-import { GetServerSideProps } from "next";
-import Head from "next/head";
-import { parseCookies } from "nookies";
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
+import { parseCookies } from 'nookies';
 
-import { Page } from "@/components/ui";
+import { Page } from '@/components/ui';
 
-import { BroadcastHeader } from "./components/BroadcastHeader";
-import { BroadcastList } from "./components/BroadcastList";
+import { BroadcastList } from './components/BroadcastList';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parseCookies(context);
-  const token = cookies["@token"];
+  const token = cookies['@token'];
   if (!token) {
     return {
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
     };
@@ -30,7 +29,7 @@ export default function Broadcast() {
       <Head>
         <title>Lista de transmissões</title>
       </Head>
-      <BroadcastHeader />
+
       <BroadcastList />
     </Page>
   );

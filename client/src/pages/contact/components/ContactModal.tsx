@@ -1,21 +1,22 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { CustomModal, CustomButton, CustomInput } from "@/components/ui";
-import { IContact } from "@/interfaces";
-import api from "@/services/api";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomModal, CustomButton, CustomInput } from '@/components/ui';
+import { IContact } from '@/interfaces';
+import { createContact, updateContact } from '@/services/contact.service';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
   isEdit: boolean;
   contact?: IContact;
+  refetch: () => void;
 }
 
 const formschema = z.object({
@@ -26,8 +27,14 @@ const formschema = z.object({
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
-  const [, setLoading] = useState(false);
+export function ContactModal({
+  open,
+  onClose,
+  isEdit,
+  contact,
+  refetch,
+}: IProps) {
+  const [loading, setLoading] = useState(false);
 
   const { handleSubmit, register } = useForm<HandleUpdateFormData>({
     resolver: zodResolver(formschema),
@@ -35,33 +42,46 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
     defaultValues: async () => {
       if (isEdit && contact) {
         return {
-          email: contact?.email || "",
+          id: contact.id,
+          email: contact?.email || '',
           name: contact.name,
           phone: contact.phone,
         };
       }
       return {
-        email: "",
-        name: "",
-        phone: "",
+        email: '',
+        name: '',
+        phone: '',
       };
     },
   });
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
-    console.info(values);
+
     try {
-      if (isEdit) {
-        await api.put(`/contacts/${contact?.id}`, values);
-      } else {
-        await api.post("/auth/singup", values);
+      if (isEdit && contact) {
+        const { success } = await updateContact(contact.id, values);
+
+        if (success) {
+          refetch();
+          toast.success('Contato salvo com sucesso!');
+          onClose();
+        }
+        return;
       }
-      toast.success("Contato salvo com sucesso!");
-      onClose();
+
+      const { success } = await createContact(values);
+
+      if (success) {
+        refetch();
+        toast.success('Contato salvo com sucesso!');
+
+        onClose();
+      }
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao fazer cadastro");
+      toast.error('Erro ao fazer cadastro');
     }
     setLoading(false);
   }
@@ -72,7 +92,7 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
 
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-          <h1 className="text-6">{isEdit ? "Editar" : "Cadastrar"}</h1>
+          <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
           <button type="button" onClick={() => onClose()}>
             X
           </button>
@@ -89,7 +109,7 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
                 type="text"
                 label="Nome"
                 required
-                {...register("name")}
+                {...register('name')}
               />
 
               <CustomInput
@@ -97,7 +117,7 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
                 placeholder=""
                 type="text"
                 label="E-mail"
-                {...register("phone")}
+                {...register('email')}
               />
 
               <CustomInput
@@ -106,7 +126,7 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
                 type="text"
                 label="Telefone"
                 required
-                {...register("email")}
+                {...register('phone')}
               />
             </div>
 
@@ -116,10 +136,16 @@ export function ContactModal({ open, onClose, isEdit, contact }: IProps) {
                 onClick={() => onClose()}
                 type="button"
                 color="error"
+                loading={loading}
               >
                 Cancelar
               </CustomButton>
-              <CustomButton variant="outlined" type="submit" color="success">
+              <CustomButton
+                variant="outlined"
+                type="submit"
+                color="success"
+                loading={loading}
+              >
                 Salvar
               </CustomButton>
             </div>

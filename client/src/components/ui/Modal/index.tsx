@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
-import { Dialog, DialogProps } from "@mui/material";
+import { Dialog, DialogProps } from '@mui/material';
 
 interface IProps extends DialogProps {
   children: ReactNode;
@@ -12,11 +12,11 @@ export default function CustomModal({ children, ...rest }: IProps) {
       {...rest}
       PaperProps={{
         sx: {
-          borderRadius: "0.375rem",
-          overflow: "hidden",
-          maxWidth: "95vw",
-          minWidth: "30vw",
-          height: "auto",
+          borderRadius: '0.375rem',
+          overflow: 'hidden',
+          maxWidth: '95vw',
+          minWidth: '30vw',
+          height: 'auto',
           zIndex: 1300,
         },
       }}

@@ -1,33 +1,34 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { IBroadcast } from "@/interfaces";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import Groups2Icon from "@mui/icons-material/Groups2";
-import { IconButton } from "@mui/material";
+import { CustomButton } from '@/components/ui';
+import { IBroadcast } from '@/interfaces';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Groups2Icon from '@mui/icons-material/Groups2';
+import { IconButton } from '@mui/material';
 
-import { BroadcastModal } from "./BroadcastModal";
+import { BroadcastModal } from './BroadcastModal';
 
 const brodcasts = [
   {
-    id: "1",
-    name: "Lista 1",
-    status: "Agendada",
-    sendDate: "2022-10-10",
-    sendTime: "12:00",
-    contactsIDs: ["1"],
-    connectionID: "1",
+    id: '1',
+    name: 'Lista 1',
+    status: 'Agendada',
+    sendDate: '2022-10-10',
+    sendTime: '12:00',
+    contactsIDs: ['1'],
+    connectionID: '1',
   },
   {
-    id: "2",
-    name: "Lista 2",
-    status: "scheduled",
-    sendDate: "2022-10-10",
-    sendTime: "23:00",
-    contactsIDs: ["1", "2"],
-    connectionID: "2",
+    id: '2',
+    name: 'Lista 2',
+    status: 'scheduled',
+    sendDate: '2022-10-10',
+    sendTime: '23:00',
+    contactsIDs: ['1', '2'],
+    connectionID: '2',
   },
 ];
 
@@ -51,6 +52,11 @@ export function BroadcastList() {
 
   return (
     <div className="w-full p-6 flex flex-row flex-wrap justify-center items-center gap-10 text-white">
+      <div className="w-full p-6 flex flex-row justify-end items-center gap-4 text-black  ">
+        <CustomButton variant="contained" onClick={() => setOpenModal(true)}>
+          Cadastrar
+        </CustomButton>
+      </div>
       {brodcasts.map((brodcast) => (
         <div
           key={brodcast.id}
@@ -69,15 +75,15 @@ export function BroadcastList() {
 
           <div className="w-full flex justify-between items-center">
             <p>
-              Status:{" "}
+              Status:{' '}
               <span
                 className={`${
-                  brodcast.status === "scheduled"
-                    ? "text-warningBase"
-                    : "text-successBase"
+                  brodcast.status === 'scheduled'
+                    ? 'text-warningBase'
+                    : 'text-successBase'
                 } `}
               >
-                {brodcast.status === "scheduled" ? "Agendada" : "Enviada"}
+                {brodcast.status === 'scheduled' ? 'Agendada' : 'Enviada'}
               </span>
             </p>
             <div className="w-auto flex-row justify-between items-center ">
@@ -85,7 +91,7 @@ export function BroadcastList() {
                 onClick={() => handleEditbrodcast(brodcast)}
                 size="small"
                 color="primary"
-                sx={{ color: "white" }}
+                sx={{ color: 'white' }}
               >
                 <EditIcon />
               </IconButton>
@@ -93,7 +99,7 @@ export function BroadcastList() {
                 onClick={() => handleDeletebrodcast(brodcast)}
                 size="small"
                 color="primary"
-                sx={{ color: "white" }}
+                sx={{ color: 'white' }}
               >
                 <DeleteIcon />
               </IconButton>

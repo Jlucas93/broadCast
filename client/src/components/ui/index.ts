@@ -1,4 +1,5 @@
 import CustomButton from './Button';
+import ConfirmationModal from './ConfirmationModal';
 import CustomInput from './Input';
 import CustomModal from './Modal';
 import CustomMultiSelect from './MultiSelect';
@@ -11,6 +12,7 @@ export {
   CustomInput,
   CustomButton,
   CustomSelect,
+  ConfirmationModal,
   CustomMultiSelect,
   CustomModal,
   CustomSwitch,

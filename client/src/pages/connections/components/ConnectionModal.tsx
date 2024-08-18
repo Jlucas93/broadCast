@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { z } from "zod";
+import { z } from 'zod';
 
 import {
   CustomModal,
   CustomButton,
   CustomInput,
   CustomSwitch,
-} from "@/components/ui";
-import { IConnection } from "@/interfaces";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui';
+import { IConnection } from '@/interfaces';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
@@ -44,7 +44,7 @@ export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
         };
       }
       return {
-        name: "",
+        name: '',
         active: false,
       };
     },
@@ -62,7 +62,7 @@ export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
 
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-          <h1 className="text-6">{isEdit ? "Editar" : "Cadastrar"}</h1>
+          <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
           <button type="button" onClick={() => onClose()}>
             X
           </button>
@@ -79,7 +79,7 @@ export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
                 placeholder=""
                 type="text"
                 label="Nome da conexão"
-                {...register("name")}
+                {...register('name')}
               />
               <Controller
                 name="active"

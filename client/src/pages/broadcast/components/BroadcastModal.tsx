@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 
-import { z } from "zod";
+import { z } from 'zod';
 
 import {
   CustomModal,
   CustomButton,
   CustomInput,
   CustomSelect,
-} from "@/components/ui";
-import { IBroadcast } from "@/interfaces";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from '@/components/ui';
+import { IBroadcast } from '@/interfaces';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   SelectChangeEvent,
   Switch,
   FormControlLabel,
   TextField,
-} from "@mui/material";
+} from '@mui/material';
 
 interface IProps {
   open: boolean;
@@ -28,17 +28,17 @@ interface IProps {
 }
 
 const data = [
-  { id: "1", name: "John Doe" },
-  { id: "2", name: "Jane Smith" },
-  { id: "3", name: "Alice Johnson" },
+  { id: '1', name: 'John Doe' },
+  { id: '2', name: 'Jane Smith' },
+  { id: '3', name: 'Alice Johnson' },
 ];
 
 const connections = [
-  { id: "1", name: "Conexão 1", active: true },
-  { id: "2", name: "Conexão 2", active: true },
-  { id: "3", name: "Conexão 3", active: false },
-  { id: "4", name: "Conexão 4", active: false },
-  { id: "5", name: "Conexão 5", active: false },
+  { id: '1', name: 'Conexão 1', active: true },
+  { id: '2', name: 'Conexão 2', active: true },
+  { id: '3', name: 'Conexão 3', active: false },
+  { id: '4', name: 'Conexão 4', active: false },
+  { id: '5', name: 'Conexão 5', active: false },
 ];
 
 const formschema = z.object({
@@ -73,17 +73,17 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
           };
         }
         return {
-          name: "",
-          connectionID: "",
+          name: '',
+          connectionID: '',
           contactsIDs: [],
-          status: "send",
-          sendDate: "",
-          sendTime: "",
+          status: 'send',
+          sendDate: '',
+          sendTime: '',
         };
       },
     });
 
-  const status = watch("status");
+  const status = watch('status');
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
@@ -97,7 +97,7 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
 
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-          <h1 className="text-6">{isEdit ? "Editar" : "Cadastrar"}</h1>
+          <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
           <button type="button" onClick={() => onClose()}>
             X
           </button>
@@ -114,7 +114,7 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
                 placeholder=""
                 type="text"
                 label="Nome da transmissão"
-                {...register("name")}
+                {...register('name')}
               />
 
               <Controller
@@ -143,7 +143,7 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
                 control={control}
                 render={({ field }) => (
                   <CustomSelect
-                    value={field.value || ""}
+                    value={field.value || ''}
                     onChange={(
                       event: SelectChangeEvent<
                         string | number | (string | number)[]
@@ -167,26 +167,26 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={status === "schedule"}
+                      checked={status === 'schedule'}
                       onChange={(event) => {
                         const newStatus = event.target.checked
-                          ? "schedule"
-                          : "send";
-                        setValue("status", newStatus);
+                          ? 'schedule'
+                          : 'send';
+                        setValue('status', newStatus);
                       }}
                     />
                   }
-                  label={status === "schedule" ? "Agendar" : "Enviar"}
+                  label={status === 'schedule' ? 'Agendar' : 'Enviar'}
                 />
               </div>
 
-              {status === "schedule" && (
+              {status === 'schedule' && (
                 <>
                   <TextField
                     label="Data de envio"
                     type="date"
                     InputLabelProps={{ shrink: true }}
-                    {...register("sendDate")}
+                    {...register('sendDate')}
                     fullWidth
                     className="mt-4"
                   />
@@ -194,7 +194,7 @@ export function BroadcastModal({ open, onClose, isEdit, broadcast }: IProps) {
                     label="Hora de envio"
                     type="time"
                     InputLabelProps={{ shrink: true }}
-                    {...register("sendTime")}
+                    {...register('sendTime')}
                     fullWidth
                     className="mt-4"
                   />

@@ -1,38 +1,39 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { IConnection } from "@/interfaces";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import { IconButton } from "@mui/material";
+import { CustomButton } from '@/components/ui';
+import { IConnection } from '@/interfaces';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { IconButton } from '@mui/material';
 
-import { ConnectionModal } from "./ConnectionModal";
+import { ConnectionModal } from './ConnectionModal';
 
 const connections = [
   {
-    id: "1",
-    name: "Conexão 1",
+    id: '1',
+    name: 'Conexão 1',
     active: true,
   },
   {
-    id: "2",
-    name: "Conexão 2",
+    id: '2',
+    name: 'Conexão 2',
     active: true,
   },
   {
-    id: "3",
-    name: "Conexão 3",
+    id: '3',
+    name: 'Conexão 3',
     active: false,
   },
   {
-    id: "4",
-    name: "Conexão 4",
+    id: '4',
+    name: 'Conexão 4',
     active: false,
   },
   {
-    id: "5",
-    name: "Conexão 5",
+    id: '5',
+    name: 'Conexão 5',
     active: false,
   },
 ];
@@ -56,6 +57,11 @@ export function ConnectionList() {
 
   return (
     <div className="w-full p-6 flex flex-row flex-wrap justify-center items-center gap-10 text-white">
+      <div className="w-full p-6 flex flex-row justify-end items-center gap-4 text-black  ">
+        <CustomButton variant="contained" onClick={() => setOpenModal(true)}>
+          Cadastrar
+        </CustomButton>
+      </div>
       {connections.map((connection) => (
         <div
           key={connection.id}
@@ -67,13 +73,13 @@ export function ConnectionList() {
           </div>
           <div className="w-full flex justify-between items-center">
             <p>
-              Status:{" "}
+              Status:{' '}
               <span
                 className={`${
-                  connection.active ? "text-successBase" : "text-dangerBase"
+                  connection.active ? 'text-successBase' : 'text-dangerBase'
                 }`}
               >
-                {connection.active ? " Ativa" : "Inativa"}
+                {connection.active ? ' Ativa' : 'Inativa'}
               </span>
             </p>
             <div className="w-auto flex-row justify-between items-center ">
@@ -81,7 +87,7 @@ export function ConnectionList() {
                 onClick={() => handleEditConnection(connection)}
                 size="small"
                 color="primary"
-                sx={{ color: "white" }}
+                sx={{ color: 'white' }}
               >
                 <EditIcon />
               </IconButton>
@@ -89,7 +95,7 @@ export function ConnectionList() {
                 onClick={() => handleDeleteConnection(connection)}
                 size="small"
                 color="primary"
-                sx={{ color: "white" }}
+                sx={{ color: 'white' }}
               >
                 <DeleteIcon />
               </IconButton>

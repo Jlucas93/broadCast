@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { useRouter } from "next/navigation";
-import { z } from "zod";
+import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
-import { CustomButton, CustomInput } from "@/components/ui";
-import { useAuth } from "@/contexts/Auth";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomButton, CustomInput } from '@/components/ui';
+import { useAuth } from '@/contexts/Auth';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const formschema = z.object({
   email: z.string(),
@@ -37,10 +37,10 @@ export default function FormLogin() {
     });
 
     if (success) {
-      router.push("/connections");
+      router.push('/connections');
     }
 
-    toast.error("Erro ao fazer login, tente novamente");
+    toast.error('Erro ao fazer login, tente novamente');
     setLoading(false);
   }
 
@@ -59,7 +59,7 @@ export default function FormLogin() {
             type="email"
             label="E-mail"
             required
-            {...register("email")}
+            {...register('email')}
           />
           <CustomInput
             className="w-full"
@@ -67,19 +67,19 @@ export default function FormLogin() {
             type="password"
             label="Senha"
             required
-            {...register("password")}
+            {...register('password')}
           />
         </div>
         <CustomButton
           className="w-full h-16"
           variant="contained"
           type="submit"
-          disabled={loading}
+          loading={loading}
         >
           Entrar
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">
-          <button type="button" onClick={() => router.push("/signup")}>
+          <button type="button" onClick={() => router.push('/signup')}>
             Não tem conta? Cadastre-se agora
           </button>
         </div>

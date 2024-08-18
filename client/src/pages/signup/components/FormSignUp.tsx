@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
-import { useRouter } from "next/navigation";
-import { z } from "zod";
+import { useRouter } from 'next/navigation';
+import { z } from 'zod';
 
-import { CustomButton, CustomInput } from "@/components/ui";
-import api from "@/services/api";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomButton, CustomInput } from '@/components/ui';
+import api from '@/services/api';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const formschema = z
   .object({
-    name: z.string().min(1, "Nome muito curto"),
-    email: z.string().min(1, "E-mail muito curto"),
-    password: z.string().min(8, "Senha muito curta"),
+    name: z.string().min(1, 'Nome muito curto'),
+    email: z.string().min(1, 'E-mail muito curto'),
+    password: z.string().min(8, 'Senha muito curta'),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "As senhas devem ser iguais",
-    path: ["confirmPassword"],
+    message: 'As senhas devem ser iguais',
+    path: ['confirmPassword'],
   });
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
@@ -42,14 +42,14 @@ export function FormSignUp() {
     setLoading(true);
 
     try {
-      await api.post("/auth/singup", values);
+      await api.post('/auth/singup', values);
 
-      toast.success("Cadastro efetuado com sucesso!");
+      toast.success('Cadastro efetuado com sucesso!');
 
-      router.push("/");
+      router.push('/');
     } catch (error) {
       console.error(error);
-      toast.error("Erro ao fazer cadastro");
+      toast.error('Erro ao fazer cadastro');
     }
 
     setLoading(false);
@@ -70,7 +70,7 @@ export function FormSignUp() {
             type="text"
             label="Nome completo"
             required
-            {...register("name")}
+            {...register('name')}
           />
           {errors && errors.name ? (
             <div className="w-full text-dangerBase text-sm">
@@ -82,7 +82,7 @@ export function FormSignUp() {
             type="email"
             label="E-mail"
             required
-            {...register("email")}
+            {...register('email')}
           />
 
           {errors && errors.email ? (
@@ -97,7 +97,7 @@ export function FormSignUp() {
             type="password"
             label="Senha"
             required
-            {...register("password")}
+            {...register('password')}
           />
 
           {errors && errors.password ? (
@@ -112,7 +112,7 @@ export function FormSignUp() {
             type="password"
             label="Confirme sua senha"
             required
-            {...register("confirmPassword")}
+            {...register('confirmPassword')}
           />
           {errors && errors.confirmPassword ? (
             <div className="w-full text-dangerBase text-sm">
@@ -125,12 +125,12 @@ export function FormSignUp() {
           className="w-full h-16"
           variant="contained"
           type="submit"
-          disabled={loading}
+          loading={loading}
         >
           Criar conta
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">
-          <button type="button" onClick={() => router.push("/")}>
+          <button type="button" onClick={() => router.push('/')}>
             já tem conta? Faça Login
           </button>
         </div>
