@@ -8,7 +8,7 @@ export default function Login() {
       <Head>
         <title>Login</title>
       </Head>
-      <main className="w-full h-full flex flex-row justify-center items-center bg-primary-light ">
+      <main className="w-full h-full flex flex-row justify-center items-center bg-primary-light">
         <FormLogin />
       </main>
     </>

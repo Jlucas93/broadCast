@@ -9,17 +9,18 @@ import { z } from 'zod';
 import { CustomModal, CustomButton, CustomInput } from '@/components/ui';
 import { IContact } from '@/interfaces';
 import { createContact, updateContact } from '@/services/contact.service';
+import { maskInputPhoneNumber, unmaskPhoneNumber } from '@/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
   onClose: () => void;
-  isEdit: boolean;
   contact?: IContact;
   refetch: () => void;
 }
 
 const formschema = z.object({
+  id: z.string().or(z.undefined()),
   email: z.string().or(z.undefined()),
   name: z.string(),
   phone: z.string(),
@@ -27,72 +28,76 @@ const formschema = z.object({
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ContactModal({
-  open,
-  onClose,
-  isEdit,
-  contact,
-  refetch,
-}: IProps) {
+export function ContactModal({ open, onClose, contact, refetch }: IProps) {
   const [loading, setLoading] = useState(false);
 
-  const { handleSubmit, register } = useForm<HandleUpdateFormData>({
+  const { handleSubmit, register, setValue } = useForm<HandleUpdateFormData>({
     resolver: zodResolver(formschema),
 
-    defaultValues: async () => {
-      if (isEdit && contact) {
-        return {
+    defaultValues: contact
+      ? {
           id: contact.id,
           email: contact?.email || '',
           name: contact.name,
           phone: contact.phone,
-        };
-      }
-      return {
-        email: '',
-        name: '',
-        phone: '',
-      };
-    },
+        }
+      : {
+          email: '',
+          name: '',
+          phone: '',
+        },
   });
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
 
-    try {
-      if (isEdit && contact) {
-        const { success } = await updateContact(contact.id, values);
-
-        if (success) {
-          refetch();
-          toast.success('Contato salvo com sucesso!');
-          onClose();
-        }
-        return;
-      }
-
-      const { success } = await createContact(values);
+    if (contact && contact.id) {
+      const { success, message } = await updateContact(contact.id, {
+        ...values,
+        phone: unmaskPhoneNumber(values.phone),
+      });
 
       if (success) {
         refetch();
         toast.success('Contato salvo com sucesso!');
-
         onClose();
+
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Erro ao fazer cadastro');
+
+      toast.error((message as string) || 'Erro ao atualizar contato');
+
+      setLoading(false);
+      return;
     }
+
+    const { success, message } = await createContact({
+      ...values,
+      phone: unmaskPhoneNumber(values.phone),
+    });
+
+    if (success) {
+      refetch();
+      toast.success('Contato salvo com sucesso!');
+
+      onClose();
+
+      return;
+    }
+
+    toast.error((message as string) || 'Erro ao criar contato');
+
     setLoading(false);
   }
 
   return (
     <div className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-      <h1 className="text-2xl font-bold">Contatos</h1>
-
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-          <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
+          <h1 className="text-6">
+            {contact && contact.id ? 'Editar' : 'Cadastrar'}
+          </h1>
           <button type="button" onClick={() => onClose()}>
             X
           </button>
@@ -126,7 +131,9 @@ export function ContactModal({
                 type="text"
                 label="Telefone"
                 required
-                {...register('phone')}
+                onChange={(e) =>
+                  setValue('phone', maskInputPhoneNumber(e.target.value))
+                }
               />
             </div>
 

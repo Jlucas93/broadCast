@@ -20,7 +20,6 @@ export default function CustomModal({ children, ...rest }: IProps) {
           zIndex: 1300,
         },
       }}
-      className="bg-primary-light"
     >
       {children}
     </Dialog>

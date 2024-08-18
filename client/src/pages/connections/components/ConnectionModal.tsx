@@ -21,7 +21,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
-  isEdit: boolean;
   connection?: IConnection;
   onClose: () => void;
   refetch: () => void;
@@ -38,67 +37,70 @@ type HandleUpdateFormData = z.infer<typeof formschema>;
 export function ConnectionModal({
   open,
   onClose,
-  isEdit,
   connection,
   refetch,
 }: IProps) {
-  const [, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { handleSubmit, register, control } = useForm<HandleUpdateFormData>({
     resolver: zodResolver(formschema),
 
-    defaultValues: async () => {
-      if (isEdit && connection) {
-        return {
+    defaultValues: connection
+      ? {
           id: connection.id,
           name: connection.name,
           active: connection?.active,
-        };
-      }
-      return {
-        name: '',
-        active: false,
-      };
-    },
+        }
+      : {
+          name: '',
+          active: false,
+        },
   });
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
 
-    try {
-      if (isEdit && connection) {
-        const { success } = await updateConnection(connection.id, values);
-
-        if (success) {
-          refetch();
-          toast.success('Conexão salva com sucesso!');
-          onClose();
-        }
-        return;
-      }
-
-      const { success } = await createConnection(values);
+    if (connection && connection.id) {
+      const { success, message } = await updateConnection(
+        connection.id,
+        values,
+      );
 
       if (success) {
         refetch();
         toast.success('Conexão salva com sucesso!');
-
         onClose();
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error(error);
-      toast.error('Erro ao fazer cadastro');
+
+      toast.error((message as string) || 'Erro ao atualizar conexão');
+      setLoading(false);
+      return;
     }
+
+    const { success, message } = await createConnection(values);
+
+    if (success) {
+      refetch();
+      toast.success('Conexão salva com sucesso!');
+
+      onClose();
+      return;
+    }
+
+    toast.error((message as string) || 'Erro ao criar conexão');
+
     setLoading(false);
   }
 
   return (
     <div className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-      <h1 className="text-2xl font-bold">Contatos</h1>
-
       <CustomModal open={open} onClose={() => onClose()}>
         <header className="w-full p-6 flex flex-row justify-between items-center gap-4 text-black">
-          <h1 className="text-6">{isEdit ? 'Editar' : 'Cadastrar'}</h1>
+          <h1 className="text-6">
+            {connection && connection.id ? 'Editar' : 'Cadastrar'}
+          </h1>
           <button type="button" onClick={() => onClose()}>
             X
           </button>
@@ -136,10 +138,16 @@ export function ConnectionModal({
                 onClick={() => onClose()}
                 type="button"
                 color="error"
+                loading={loading}
               >
                 Cancelar
               </CustomButton>
-              <CustomButton variant="outlined" type="submit" color="success">
+              <CustomButton
+                loading={loading}
+                variant="outlined"
+                type="submit"
+                color="success"
+              >
                 Salvar
               </CustomButton>
             </div>

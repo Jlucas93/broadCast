@@ -40,7 +40,10 @@ const config: Config = {
       gray: '#c6cdd5',
       pink: '#FF79C6',
       purple: '#9580ff',
+      purpleDark: '#6E40C9',
+      // #5944c3
       cyan: '#8BE9FD',
+      blue: '#1976D2',
 
       'white-transparent': {
         30: '#ffffff30',

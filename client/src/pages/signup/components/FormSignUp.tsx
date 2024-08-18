@@ -62,7 +62,7 @@ export function FormSignUp() {
         className="w-full flex flex-col justify-start gap-4 p-4 bg-white border-1 border-solid border-white rounded-default"
       >
         <div className="w-full flex justify-center items-center">
-          <h1 className="text-2xl font-bold">Cadastrar Conta</h1>
+          <h1 className="text-xl font-bold">Cadastrar Conta</h1>
         </div>
         <div className="w-full h-full flex flex-col justify-start items-start mt-8 gap-4">
           <CustomInput
@@ -122,7 +122,7 @@ export function FormSignUp() {
         </div>
 
         <CustomButton
-          className="w-full h-16"
+          className=" w-full h-16 gap-1 bg-purple hover:bg-purpleDark"
           variant="contained"
           type="submit"
           loading={loading}
@@ -131,7 +131,7 @@ export function FormSignUp() {
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">
           <button type="button" onClick={() => router.push('/')}>
-            já tem conta? Faça Login
+            Possui uma conta? <span className="text-blue">Faça Login</span>
           </button>
         </div>
       </form>

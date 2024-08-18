@@ -37,7 +37,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     async (userData: {
       email: string;
       password: string;
-    }): Promise<{ success: boolean }> => {
+    }): Promise<{ success: boolean; message: string }> => {
       try {
         const { data } = await api.post('auth/login', userData);
 
@@ -59,10 +59,14 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         });
 
         setIsAuth(true);
-        return { success: true };
+        return { success: true, message: 'Login efetuado com sucesso' };
       } catch (error) {
         console.error(`Error on login: ${error}`);
-        return { success: false };
+        return {
+          success: false,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          message: (error as any)?.response?.data?.message || error,
+        };
       }
     },
     [],

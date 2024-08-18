@@ -25,7 +25,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function Broadcast() {
   return (
-    <Page title="Lista de transmissões">
+    <Page
+      title="Lista de transmissões"
+      subtitle="Para criar uma lista de transmissões e ncessário ter pelo menos 1 conexão ativa e escolher pelo menos  1 contato!"
+    >
       <Head>
         <title>Lista de transmissões</title>
       </Head>

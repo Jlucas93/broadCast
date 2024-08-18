@@ -6,11 +6,14 @@ import { twMerge } from 'tailwind-merge';
 
 type IPageProps = ComponentProps<'div'> & {
   children: ReactNode;
+  title?: string;
+  subtitle?: string;
 };
 
 export default function Page({
   className,
   title,
+  subtitle,
   children,
   ...rest
 }: IPageProps) {
@@ -24,16 +27,13 @@ export default function Page({
     >
       {title ? (
         <div className="w-full flex flex-col justify-center items-center gap-2 mt-2 mb-1 phone:mt-6">
-          <div className="flex flex-row justify-center items-center gap-7 relative">
-            {/* {hasBackButton && handleTo ? (
-              <div className="absolute top-2 left-0">
-                <ButtonIcon
-                  icon="arrowrotateright"
-                  onClick={() => handleTo()}
-                />
-              </div>
-            ) : null} */}
+          <div className="flex flex-col justify-center items-center gap-7 relative">
             <p className="font-bold text-lg text-center  text-white">{title}</p>
+            {subtitle ? (
+              <p className="font-bold text-md text-center  text-gray">
+                {subtitle}
+              </p>
+            ) : null}
           </div>
         </div>
       ) : null}

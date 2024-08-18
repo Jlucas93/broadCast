@@ -1,40 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## WEB BroadCast
 
-## Getting Started
+App feito com NextJs e typescript, para cadastro de contato, Conexões de WhatsAPP e Lista de trasnmissões
 
-First, run the development server:
+## 💻 Pré-requisitos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+
+- Você instalou a versão do Node 20.9.0.
+- Você tem uma máquina Windows ou Linux ou Mac.
+- Você leu esse documento por completo.
+
+## 🚀 Instalando
+
+Para instalar o projeto, siga estas etapas:
+
+- Abra o projeto no VSCode e instale as depedências:
+
+```
+npm install
+ou
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Terceriro, copie o arquivo .env.example e modifique para .env.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+> [!TIP]
+> É necessário mudar suas envs para conectar a API
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 🖥️ Rodar
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### ☕ Local
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Para rodar o projeto rode o comando
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+npm run dev
+ou
+yarn dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### ☕ Para build
 
-## Deploy on Vercel
+Para realizar o build do projeto basta executar o comando:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+npm run build
+ou
+yarn build
+
+```
+
+## 📁 Pastas
+
+- Pages: Páginas do projeto.
+- Services: Todas os serviços de cada página do sistema.
+- Style: Estilização global do CSS.
+- Layout: Prover o layout do sistema, nesse caso a sidebar
+- Components: Todos os componentes do app, como botões, Modais, Inputs e componentes da página.
+- InterfaceS: Todos as tipagens ncessária do projeto
+- Cntext: Contextos necessários para execução do app
+
+## 📖 Dependências
+
+- react-hook-form: Biblioteca para lidar com formulários de forma eficiente e controlada.
+- zod: Biblioteca para tratamento de dados dos formulários.
+- react-toastify: Biblioteca para notificar ao usuário ações de erros e sucesso.
+- Material UI e Tailwind: Biblioteca para css.
+- axios: Biblioteca para lidar com http requests
+- nookies: Biblioteca para lidar com armazenamento e manipulação de cookies
+
+## 🗎 Variaveis de Ambiente Essenciais executar o projeto
+
+- NEXT_PUBLIC_BASE_API_URL: Definição do do link da sua API.

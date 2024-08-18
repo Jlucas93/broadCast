@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { CustomTable, ConfirmationModal, CustomButton } from '@/components/ui';
 import { IContact } from '@/interfaces';
 import { getContacts, deleteContact } from '@/services/contact.service';
+import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -35,7 +36,7 @@ export function ContactTable() {
       toast.error('Erro ao buscar contatos!');
       return;
     }
-
+    setSelectedContact(undefined);
     setContacts(data);
   }
 
@@ -52,10 +53,10 @@ export function ContactTable() {
   async function handleDelete() {
     if (!contactToDelete) return;
 
-    const { success } = await deleteContact(contactToDelete);
+    const { success, message } = await deleteContact(contactToDelete);
 
     if (!success) {
-      toast.error('Erro ao deletar contato!');
+      toast.error(message || 'Erro ao deletar contato!');
       setOpenConfirmModal(false);
       return;
     }
@@ -72,7 +73,12 @@ export function ContactTable() {
   return (
     <div className="w-full p-6 flex flex-col justify-between items-center gap-4 text-black">
       <div className="w-full p-6 flex flex-row justify-end items-center gap-4 text-black  ">
-        <CustomButton variant="contained" onClick={() => setOpenModal(true)}>
+        <CustomButton
+          variant="contained"
+          onClick={() => setOpenModal(true)}
+          className="gap-1 bg-purple hover:bg-purpleDark"
+        >
+          <AddIcon />
           Cadastrar
         </CustomButton>
       </div>
@@ -100,8 +106,10 @@ export function ContactTable() {
       {openModal ? (
         <ContactModal
           open={openModal}
-          onClose={() => setOpenModal(false)}
-          isEdit
+          onClose={() => {
+            setOpenModal(false);
+            setSelectedContact(undefined);
+          }}
           refetch={() => fetchContacts()}
           contact={selectedContact}
         />

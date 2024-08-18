@@ -18,6 +18,7 @@ export interface IBroadcast {
   sendDate: string;
   sendTime: string;
   connectionID: string;
+  connectionName: string;
   contactsIDs: string[];
 }
 
@@ -33,6 +34,6 @@ export interface IAuthContextType {
   signIn(userData: {
     email: string;
     password: string;
-  }): Promise<{ success: boolean }>;
+  }): Promise<{ success: boolean; message: string }>;
   signOut(): void;
 }

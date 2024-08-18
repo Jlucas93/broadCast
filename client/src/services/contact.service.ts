@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/services/api';
 
 interface IContact {
@@ -13,7 +14,10 @@ export async function getContacts() {
     return { success: true, data };
   } catch (error) {
     console.error(error);
-    return { success: false, data: [] };
+    return {
+      success: false,
+      data: [],
+    };
   }
 }
 
@@ -23,8 +27,11 @@ export async function createContact(contact: IContact) {
 
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -33,8 +40,11 @@ export async function updateContact(id: string, contact: IContact) {
     const { data } = await api.put(`/contact/${id}`, contact);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -43,7 +53,10 @@ export async function deleteContact(id: string) {
     const { data } = await api.delete(`/contact/${id}`);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }

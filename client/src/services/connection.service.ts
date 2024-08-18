@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/services/api';
 
 interface IConnection {
@@ -15,6 +16,16 @@ export async function getConnections() {
     return { success: false, data: [] };
   }
 }
+export async function getActiveConnections() {
+  try {
+    const { data } = await api.get('/connection/active');
+
+    return { success: true, data };
+  } catch (error) {
+    console.error(error);
+    return { success: false, data: [] };
+  }
+}
 
 export async function createConnection(connection: IConnection) {
   try {
@@ -22,8 +33,11 @@ export async function createConnection(connection: IConnection) {
 
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -32,8 +46,11 @@ export async function updateConnection(id: string, connection: IConnection) {
     const { data } = await api.put(`/connection/${id}`, connection);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -42,7 +59,10 @@ export async function deleteConnection(id: string) {
     const { data } = await api.delete(`/connection/${id}`);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }

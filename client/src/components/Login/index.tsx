@@ -31,16 +31,17 @@ export default function FormLogin() {
   async function formSubmit(values: { email: string; password: string }) {
     setLoading(true);
 
-    const { success } = await signIn({
+    const { success, message } = await signIn({
       email: values.email,
       password: values.password,
     });
 
     if (success) {
       router.push('/connections');
+      return;
     }
 
-    toast.error('Erro ao fazer login, tente novamente');
+    toast.error(message || 'Erro ao fazer login, tente novamente');
     setLoading(false);
   }
 
@@ -51,7 +52,7 @@ export default function FormLogin() {
         className="w-full flex flex-col justify-start gap-4 p-4 bg-white border-1 border-solid border-white rounded-default"
       >
         <div className="w-full flex justify-center items-center">
-          <h1 className="text-2xl font-bold">Login</h1>
+          <h1 className="text-xl font-bold">Login</h1>
         </div>
         <div className="w-full h-full flex flex-col justify-start items-start mt-8 gap-4">
           <CustomInput
@@ -71,16 +72,16 @@ export default function FormLogin() {
           />
         </div>
         <CustomButton
-          className="w-full h-16"
           variant="contained"
           type="submit"
           loading={loading}
+          className=" w-full h-16 gap-1 bg-purple hover:bg-purpleDark"
         >
           Entrar
         </CustomButton>
         <div className="w-full flex items-center justify-end cursor-pointer">
           <button type="button" onClick={() => router.push('/signup')}>
-            Não tem conta? Cadastre-se agora
+            Não tem conta? <span className="text-blue">Cadastre-se agora</span>
           </button>
         </div>
       </form>

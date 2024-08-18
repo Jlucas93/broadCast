@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/services/api';
 
 interface IBroadcast {
   name: string;
-  active: boolean;
-  sendDate: string;
-  sendTime: string;
-  status: string;
+  active?: boolean;
+  sendDate?: string;
+  sendTime?: string;
+  status?: string;
   userId?: string;
   connectionID: string;
   contactsIDs: string[];
@@ -27,8 +28,11 @@ export async function createBroadcast(broadcast: IBroadcast) {
 
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -37,8 +41,11 @@ export async function updateBroadcast(id: string, broadcast: IBroadcast) {
     const { data } = await api.put(`/broadcast/${id}`, broadcast);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }
 
@@ -47,7 +54,10 @@ export async function deleteBroadcast(id: string) {
     const { data } = await api.delete(`/broadcast/${id}`);
     return { success: true, data };
   } catch (error) {
-    console.error(error);
-    return { success: false, data: null };
+    return {
+      success: false,
+      data: null,
+      message: (error as any)?.response?.data?.message || error,
+    };
   }
 }

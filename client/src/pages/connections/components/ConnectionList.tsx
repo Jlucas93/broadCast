@@ -9,6 +9,7 @@ import {
   getConnections,
   deleteConnection,
 } from '@/services/connection.service';
+import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
@@ -22,8 +23,9 @@ export function ConnectionList() {
   const [connectionToDelete, setConnectionToDelete] = useState<string | null>(
     null,
   );
-  const [selectedConnection, setSelectedConnection] =
-    useState<IConnection | null>(null);
+  const [selectedConnection, setSelectedConnection] = useState<
+    IConnection | undefined
+  >(undefined);
 
   async function fetchConnections() {
     const { data, success } = await getConnections();
@@ -32,7 +34,7 @@ export function ConnectionList() {
       toast.error('Erro ao buscar conexões!');
       return;
     }
-
+    setSelectedConnection(undefined);
     setConnections(data);
   }
 
@@ -49,10 +51,10 @@ export function ConnectionList() {
   async function handleDelete() {
     if (!connectionToDelete) return;
 
-    const { success } = await deleteConnection(connectionToDelete);
+    const { success, message } = await deleteConnection(connectionToDelete);
 
     if (!success) {
-      toast.error('Erro ao deletar conexão!');
+      toast.error(message || 'Erro ao deletar conexão!');
       setOpenConfirmModal(false);
       return;
     }
@@ -69,7 +71,12 @@ export function ConnectionList() {
   return (
     <div className="w-full p-6 flex flex-row flex-wrap justify-center items-center gap-10 text-white">
       <div className="w-full p-6 flex flex-row justify-end items-center gap-4 text-black  ">
-        <CustomButton variant="contained" onClick={() => setOpenModal(true)}>
+        <CustomButton
+          variant="contained"
+          onClick={() => setOpenModal(true)}
+          className="gap-1 bg-purple hover:bg-purpleDark"
+        >
+          <AddIcon />
           Cadastrar
         </CustomButton>
       </div>
@@ -115,11 +122,13 @@ export function ConnectionList() {
         </div>
       ))}
 
-      {openModal && selectedConnection ? (
+      {openModal ? (
         <ConnectionModal
           open={openModal}
-          onClose={() => setOpenModal(false)}
-          isEdit
+          onClose={() => {
+            setOpenModal(false);
+            setSelectedConnection(undefined);
+          }}
           refetch={() => fetchConnections()}
           connection={selectedConnection}
         />
