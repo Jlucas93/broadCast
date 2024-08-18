@@ -27,7 +27,12 @@ const formschema = z.object({
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ContactModal({ open, onClose, contact, refetch }: IProps) {
+export default function ContactModal({
+  open,
+  onClose,
+  contact,
+  refetch,
+}: IProps) {
   const [loading, setLoading] = useState(false);
 
   const { handleSubmit, register } = useForm<HandleUpdateFormData>({

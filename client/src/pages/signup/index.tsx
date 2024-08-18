@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { FormSignUp } from './components/FormSignUp';
+import FormSignUp from './components/FormSignUp';
 
 export default function Login() {
   return (

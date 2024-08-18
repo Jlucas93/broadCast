@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies';
 
 import { Page } from '@/components/ui';
 
-import { BroadcastList } from './components/BroadcastList';
+import BroadcastList from './components/BroadcastList';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parseCookies(context);

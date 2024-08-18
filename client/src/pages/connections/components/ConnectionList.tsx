@@ -14,9 +14,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
-import { ConnectionModal } from './ConnectionModal';
+import ConnectionModal from './ConnectionModal';
 
-export function ConnectionList() {
+export default function ConnectionList() {
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [connections, setConnections] = useState<IConnection[]>([]);

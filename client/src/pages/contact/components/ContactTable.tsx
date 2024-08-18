@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 
-import { ContactModal } from './ContactModal';
+import ContactModal from './ContactModal';
 
 const columns = [
   { id: 'name', label: 'Nome' },
@@ -20,7 +20,7 @@ const columns = [
   { id: 'actions', label: 'Ações' },
 ];
 
-export function ContactTable() {
+export default function ContactTable() {
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [contacts, setContacts] = useState<IContact[]>([]);

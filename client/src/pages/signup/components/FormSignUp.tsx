@@ -25,7 +25,7 @@ const formschema = z
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function FormSignUp() {
+export default function FormSignUp() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);

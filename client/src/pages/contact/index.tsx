@@ -4,7 +4,7 @@ import { parseCookies } from 'nookies';
 
 import { Page } from '@/components/ui';
 
-import { ContactTable } from './components/ContactTable';
+import ContactTable from './components/ContactTable';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = parseCookies(context);

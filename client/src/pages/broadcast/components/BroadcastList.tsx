@@ -12,9 +12,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import { IconButton } from '@mui/material';
 
-import { BroadcastModal } from './BroadcastModal';
+import BroadcastModal from './BroadcastModal';
 
-export function BroadcastList() {
+export default function BroadcastList() {
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [broadcastToDelete, setBroadcastToDelete] = useState<string | null>(

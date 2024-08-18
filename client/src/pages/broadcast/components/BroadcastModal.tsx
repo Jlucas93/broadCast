@@ -61,7 +61,12 @@ const formschema = z
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function BroadcastModal({ open, onClose, broadcast, refetch }: IProps) {
+export default function BroadcastModal({
+  open,
+  onClose,
+  broadcast,
+  refetch,
+}: IProps) {
   const [loading, setLoading] = useState(false);
 
   const [loadingConnections, setLoadingConnections] = useState(false);

@@ -34,7 +34,7 @@ const formschema = z.object({
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ConnectionModal({
+export default function ConnectionModal({
   open,
   onClose,
   connection,
