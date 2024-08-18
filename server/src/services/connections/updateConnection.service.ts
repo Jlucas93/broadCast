@@ -13,7 +13,7 @@ import { InvalidRequestError } from '../../errors/AppError';
 
 interface IContact {
 	name?: string;
-	status?: boolean;
+	active?: boolean;
 	userId?: string;
 }
 

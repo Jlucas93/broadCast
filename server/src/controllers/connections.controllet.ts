@@ -36,16 +36,16 @@ async function createConnection(
 ) {
 	try {
 		const bodySchema = z.object({
-			status: z.boolean(),
+			active: z.boolean(),
 			name: z.string(),
 		});
 
 		const userId = req.user?.id as string;
 
-		const { status, name } = bodySchema.parse(req.body);
+		const { active, name } = bodySchema.parse(req.body);
 
 		const { message } = await createConnectionService({
-			status,
+			active,
 			name,
 			userId,
 		});
@@ -69,7 +69,7 @@ async function updateConnection(
 	try {
 		const bodySchema = z.object({
 			name: z.string().or(z.undefined()),
-			status: z.boolean().or(z.undefined()),
+			active: z.boolean().or(z.undefined()),
 		});
 
 		const paramsSchema = z.object({
@@ -77,12 +77,12 @@ async function updateConnection(
 		});
 		const { id } = paramsSchema.parse(req.params);
 
-		const { status, name } = bodySchema.parse(req.body);
+		const { active, name } = bodySchema.parse(req.body);
 
 		const { message } = await updateConnectionService({
 			connection: {
 				name,
-				status,
+				active,
 			},
 			id,
 		});

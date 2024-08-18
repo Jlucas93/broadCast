@@ -11,7 +11,7 @@ import { firebaseApp } from '../../database';
 interface IConnection {
 	id: string;
 	name: string;
-	status: string;
+	active: boolean;
 }
 
 interface IReturn {
