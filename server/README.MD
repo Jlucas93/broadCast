@@ -74,19 +74,34 @@ yarn start
 - firebase-admin: Biblioteca para codificar um token e garantir segurança nas rotas necessárias
 - zod: Biblioteca para validação de dados nas requisições e garantir envs necessárias.
 
-## 🗎 Variaveis de Ambiente Essenciais executar o projeto
+## 🗎 Variáveis de Ambiente Essenciais para Executar o Projeto
 
-- PORT: Opicinal,Definir a porta que será executada a api
-- NODE_ENV: Definição do ambiente, onde pode ser dev, sta, test e prod.
-- APP_SECRET: Chave secreta para codificar o JWT
+- **PORT**: Opcional. Define a porta que a API será executada. (Exemplo: `3003`)
+- **NODE_ENV**: Define o ambiente. Pode ser `dev`, `sta`, `test`, ou `prod`. (Exemplo: `DEVELOPMENT`)
+- **APP_SECRET**: Chave secreta para codificar o JWT. (Exemplo: `secreKey`)
 
-- As seguintes envs são relacionadas ao firebase
-- API_KEY
-- AUTH_DOMAIN
-- PROJECT_ID
-- STORAGE_BUCKET
-- MESSAGING_SENDER_ID
-- APP_ID
+### Credenciais do Firebase
+
+- **FIREBASE_API_KEY**: Sua chave de API do Firebase.
+- **FIREBASE_AUTH_DOMAIN**: Domínio de autenticação do Firebase.
+- **FIREBASE_PROJECT_ID**: ID do projeto Firebase.
+- **FIREBASE_STORAGE_BUCKET**: Bucket de armazenamento do Firebase.
+- **FIREBASE_MESSAGING_SENDER_ID**: ID do remetente de mensagens do Firebase.
+- **FIREBASE_APP_ID**: ID do aplicativo Firebase.
+
+### Configurações de Autenticação Firebase
+
+- **FIREBASE_SERVICE_ACCOUNT_TYPE**: Tipo da conta de serviço Firebase.
+- **FIREBASE_SERVICE_ACCOUNT_PROJECT_ID**: ID do projeto da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY_ID**: ID da chave privada da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY**: Chave privada da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_CLIENT_EMAIL**: Email do cliente da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_CLIENT_ID**: ID do cliente da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_AUTH_URI**: URI de autenticação da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_TOKEN_URI**: URI do token da conta de serviço.
+- **FIREBASE_SERVICE_ACCOUNT_AUTH_PROVIDER_X509_CERT_URL**: URL do certificado X509 do provedor de autenticação.
+- **FIREBASE_SERVICE_ACCOUNT_CLIENT_X509_CERT_URL**: URL do certificado X509 do cliente.
+- **FIREBASE_SERVICE_ACCOUNT_UNIVERSE_DOMAIN**: Domínio do universo da conta de serviço.
 
 ## 🫙 Docker
 
