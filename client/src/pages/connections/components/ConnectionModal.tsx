@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { z } from 'zod';
 
@@ -12,13 +13,18 @@ import {
   CustomSwitch,
 } from '@/components/ui';
 import { IConnection } from '@/interfaces';
+import {
+  createConnection,
+  updateConnection,
+} from '@/services/connection.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IProps {
   open: boolean;
-  onClose: () => void;
   isEdit: boolean;
   connection?: IConnection;
+  onClose: () => void;
+  refetch: () => void;
 }
 
 const formschema = z.object({
@@ -29,7 +35,13 @@ const formschema = z.object({
 
 type HandleUpdateFormData = z.infer<typeof formschema>;
 
-export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
+export function ConnectionModal({
+  open,
+  onClose,
+  isEdit,
+  connection,
+  refetch,
+}: IProps) {
   const [, setLoading] = useState(false);
 
   const { handleSubmit, register, control } = useForm<HandleUpdateFormData>({
@@ -52,7 +64,31 @@ export function ConnectionModal({ open, onClose, isEdit, connection }: IProps) {
 
   async function formSubmit(values: HandleUpdateFormData) {
     setLoading(true);
-    console.info(values);
+
+    try {
+      if (isEdit && connection) {
+        const { success } = await updateConnection(connection.id, values);
+
+        if (success) {
+          refetch();
+          toast.success('Conexão salva com sucesso!');
+          onClose();
+        }
+        return;
+      }
+
+      const { success } = await createConnection(values);
+
+      if (success) {
+        refetch();
+        toast.success('Conexão salva com sucesso!');
+
+        onClose();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Erro ao fazer cadastro');
+    }
     setLoading(false);
   }
 

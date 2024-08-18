@@ -1,59 +1,70 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-import { CustomButton } from '@/components/ui';
+import { ConfirmationModal, CustomButton } from '@/components/ui';
 import { IConnection } from '@/interfaces';
+import {
+  getConnections,
+  deleteConnection,
+} from '@/services/connection.service';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton } from '@mui/material';
 
 import { ConnectionModal } from './ConnectionModal';
 
-const connections = [
-  {
-    id: '1',
-    name: 'Conexão 1',
-    active: true,
-  },
-  {
-    id: '2',
-    name: 'Conexão 2',
-    active: true,
-  },
-  {
-    id: '3',
-    name: 'Conexão 3',
-    active: false,
-  },
-  {
-    id: '4',
-    name: 'Conexão 4',
-    active: false,
-  },
-  {
-    id: '5',
-    name: 'Conexão 5',
-    active: false,
-  },
-];
-
 export function ConnectionList() {
   const [openModal, setOpenModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [connections, setConnections] = useState<IConnection[]>([]);
+  const [connectionToDelete, setConnectionToDelete] = useState<string | null>(
+    null,
+  );
   const [selectedConnection, setSelectedConnection] =
     useState<IConnection | null>(null);
 
+  async function fetchConnections() {
+    const { data, success } = await getConnections();
+
+    if (!success) {
+      toast.error('Erro ao buscar conexões!');
+      return;
+    }
+
+    setConnections(data);
+  }
+
   function handleEditConnection(connection: IConnection) {
-    console.info(connection);
     setSelectedConnection(connection);
     setOpenModal(true);
   }
 
-  function handleDeleteConnection(connection: IConnection) {
-    console.info(connection);
-    setSelectedConnection(connection);
-    setOpenModal(true);
+  function handleDeleteClick(contactId: string) {
+    setConnectionToDelete(contactId);
+    setOpenConfirmModal(true);
   }
+
+  async function handleDelete() {
+    if (!connectionToDelete) return;
+
+    const { success } = await deleteConnection(connectionToDelete);
+
+    if (!success) {
+      toast.error('Erro ao deletar conexão!');
+      setOpenConfirmModal(false);
+      return;
+    }
+
+    await fetchConnections();
+    setOpenConfirmModal(false);
+    toast.success('Conexão deletada com sucesso!');
+  }
+
+  useEffect(() => {
+    fetchConnections();
+  }, []);
 
   return (
     <div className="w-full p-6 flex flex-row flex-wrap justify-center items-center gap-10 text-white">
@@ -92,7 +103,7 @@ export function ConnectionList() {
                 <EditIcon />
               </IconButton>
               <IconButton
-                onClick={() => handleDeleteConnection(connection)}
+                onClick={() => handleDeleteClick(connection.id)}
                 size="small"
                 color="primary"
                 sx={{ color: 'white' }}
@@ -109,7 +120,16 @@ export function ConnectionList() {
           open={openModal}
           onClose={() => setOpenModal(false)}
           isEdit
+          refetch={() => fetchConnections()}
           connection={selectedConnection}
+        />
+      ) : null}
+
+      {openConfirmModal ? (
+        <ConfirmationModal
+          open={openConfirmModal}
+          onClose={() => setOpenConfirmModal(false)}
+          onConfirm={() => handleDelete()}
         />
       ) : null}
     </div>
