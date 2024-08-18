@@ -38,10 +38,35 @@ export async function updateConnectionService({
 
 	const docRef = doc(db, 'connections', connectionSnapshot.docs[0].id);
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	await updateDoc(docRef, connection as { [x: string]: any });
+	if (connection.name) {
+		const duplicateQuery = query(
+			connectionCollection,
+			where('name', '==', connection.name),
+			where('userId', '==', connection.userId),
+		);
+
+		const duplicateSnapshot = await getDocs(duplicateQuery);
+
+		const existingConnection = duplicateSnapshot.docs.find(
+			(doc) => doc.id !== id,
+		);
+
+		if (existingConnection) {
+			throw new InvalidRequestError(
+				`Já existe uma conexão com o nome "${connection.name}" para este usuário.`,
+				400,
+			);
+		}
+	}
+
+	const updateData = {
+		...connection,
+		updatedAt: new Date(),
+	};
+
+	await updateDoc(docRef, updateData);
 
 	return {
-		message: 'Conexão atualizado com sucesso!',
+		message: 'Conexão atualizada com sucesso!',
 	};
 }

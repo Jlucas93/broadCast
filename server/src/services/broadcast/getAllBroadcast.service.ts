@@ -12,6 +12,11 @@ interface IBroadcast {
 	id: string;
 	name: string;
 	status: string;
+	sendDate: string;
+	sendTime: string;
+	connectionID: string;
+	userID: string;
+	contactsIDs: string[];
 }
 
 interface IReturn {

@@ -15,6 +15,7 @@ interface IContact {
 	name?: string;
 	email?: string;
 	phone?: string;
+	userID?: string;
 }
 
 interface IUpdateContactParams {
@@ -38,8 +39,31 @@ export async function updateContactService({
 
 	const docRef = doc(db, 'contacts', contactSnapShot.docs[0].id);
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	await updateDoc(docRef, contact as { [x: string]: any });
+	if (contact.phone) {
+		const duplicateQuery = query(
+			contactsCollection,
+			where('phone', '==', contact.phone),
+			where('userID', '==', contact.userID),
+		);
+
+		const duplicateSnapshot = await getDocs(duplicateQuery);
+
+		const existingContact = duplicateSnapshot.docs.find((doc) => doc.id !== id);
+
+		if (existingContact) {
+			throw new InvalidRequestError(
+				`Já existe um contato com esse telefone para este usuário.`,
+				400,
+			);
+		}
+	}
+
+	const updateData = {
+		...contact,
+		updatedAt: new Date(),
+	};
+
+	await updateDoc(docRef, updateData);
 
 	return {
 		message: 'Contato atualizado com sucesso!',

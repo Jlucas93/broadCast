@@ -26,11 +26,11 @@ export async function getAllConnectionsService({
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
 
-	const connectioQuery = query(
+	const connectionQuery = query(
 		connectionCollection,
 		where('userId', '==', userId),
 	);
-	const connectionSnapshot = await getDocs(connectioQuery);
+	const connectionSnapshot = await getDocs(connectionQuery);
 
 	const connections: IConnection[] = connectionSnapshot.docs.map(
 		(doc) => ({ ...doc.data() }) as IConnection,

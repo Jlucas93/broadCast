@@ -20,8 +20,8 @@ export async function deleteConnectionService({
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
 
-	const connectioQuery = query(connectionCollection, where('id', '==', id));
-	const connectionSnapshot = await getDocs(connectioQuery);
+	const connectionQuery = query(connectionCollection, where('id', '==', id));
+	const connectionSnapshot = await getDocs(connectionQuery);
 
 	if (connectionSnapshot.empty) {
 		throw new InvalidRequestError('Conexão não encontrada', 404);

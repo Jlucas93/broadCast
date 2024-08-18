@@ -29,13 +29,13 @@ export async function createConnectionService({
 	const db = getFirestore(firebaseApp);
 	const connectionCollection = collection(db, 'connections');
 
-	const connectioQuery = query(
+	const connectionQuery = query(
 		connectionCollection,
 		where('name', '==', name),
 		where('userId', '==', userId),
 	);
 
-	const connectionSnapshot = await getDocs(connectioQuery);
+	const connectionSnapshot = await getDocs(connectionQuery);
 
 	if (!connectionSnapshot.empty) {
 		throw new InvalidRequestError(
