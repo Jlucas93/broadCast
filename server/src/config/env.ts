@@ -5,7 +5,6 @@ dotenv.config();
 
 const envSchema = z.object({
 	PORT: z.number().optional().default(9010),
-	PROXY_PORT: z.number().optional().default(9010),
 	NODE_ENV: z.string().default('DEVELOPMENT'),
 
 	FIREBASE_API_KEY: z.string(),
@@ -30,7 +29,6 @@ const envSchema = z.object({
 
 export const ENV = envSchema.parse({
 	PORT: Number(process.env.PORT),
-	PROXY_PORT: Number(process.env.PROXY_PORT),
 	NODE_ENV: process.env.NODE_ENV,
 
 	FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,

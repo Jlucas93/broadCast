@@ -78,7 +78,6 @@ yarn start
 
 - **PORT**: Opcional. Define a porta que a API será executada. (Exemplo: `3003`)
 - **NODE_ENV**: Define o ambiente. Pode ser `dev`, `sta`, `test`, ou `prod`. (Exemplo: `DEVELOPMENT`)
-- **APP_SECRET**: Chave secreta para codificar o JWT. (Exemplo: `secreKey`)
 
 ### Credenciais do Firebase
 
