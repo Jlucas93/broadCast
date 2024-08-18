@@ -23,7 +23,7 @@ async function singup(req: Request, res: Response, next: NextFunction) {
 		return res.status(201).json({ message });
 	} catch (error) {
 		logger({
-			message: error instanceof Error ? error.message : String(error),
+			message: error,
 			type: 'error',
 		});
 
