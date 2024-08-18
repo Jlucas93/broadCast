@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  api_brodcast:
-    container_name: api_brodcast
+  api_broadcast:
+    container_name: api_broadcast
     build:
       network: host
       context: .
